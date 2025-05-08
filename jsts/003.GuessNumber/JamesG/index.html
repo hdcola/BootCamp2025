@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Guess Number</title>
+	</head>
+	<body>
+		<div class="game-container">
+			<div>Guess a Number 0 ~ 999</div>
+			<input
+				type="number"
+				id="guess"
+				placeholder="0 到 999"
+				min="0"
+				max="999"
+			/>
+			<button onclick="checkGuess()">Guess</button>
+			<button onclick="restartGame()">Play Again</button>
+			<div id="result"></div>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
