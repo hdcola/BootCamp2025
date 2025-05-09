@@ -3,20 +3,25 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Guess Number</title>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<div class="game-container">
 			<div>Guess a Number 0 ~ 999</div>
-			<input
-				type="number"
-				id="guess"
-				placeholder="0 到 999"
-				min="0"
-				max="999"
-			/>
-			<button onclick="checkGuess()">Guess</button>
-			<button onclick="restartGame()">Play Again</button>
+			<div id="guesspart">
+				<div>Number:</div>
+				<input
+					type="number"
+					id="guess"
+					placeholder="0 到 999"
+					min="0"
+					max="999"
+				/>
+				<button id="guessbt" onclick="checkGuess()">Guess</button>
+			</div>
+			<button id="startbt" onclick="restartGame()">New Game</button>
 			<div id="result"></div>
+			<div id="processing"></div>
 		</div>
 		<script src="script.js"></script>
 	</body>
