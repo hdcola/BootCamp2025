@@ -1,60 +1,58 @@
-body, html {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f8f8;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
+body,
+html {
+	height: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #f8f8f8;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 .container {
-    background-color: rgba(255, 255, 255, 0.983);
-    border-color: rgb(238, 235, 235);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
-    margin: 30px;
-    width: 620px;
-    text-align: center;
-    
+	background-color: rgba(255, 255, 255, 0.983);
+	border-color: rgb(238, 235, 235);
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	/* 轻微阴影 */
+	margin: 30px;
+	width: 620px;
+	text-align: center;
 }
 
 .title {
-    font-size: 17px;
-    border-bottom: rgb(234, 232, 232);
-    border-width:0 0 1px 0;
-    border-style: solid;
+	font-size: 17px;
+	border-bottom: rgb(234, 232, 232);
+	border-width: 0 0 1px 0;
+	border-style: solid;
 }
 
 .textbox {
-    padding: 10px 20px;
+	padding: 10px 20px;
 }
+
 .bottom {
-    padding: 15px;
-    background-color: #f0f0f0;
-    border-radius: 0 0 20px 20px;
+	padding: 15px;
+	background-color: #f0f0f0;
+	border-radius: 0 0 20px 20px;
 }
 
+/* 按钮样式 */
+.bottom button {
+	width: 450px;
+	padding: 10px 20px;
+	background-color: #8296df;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	cursor: pointer;
+	font-size: 22px;
+	font-family: 'Microsoft YaHei', Arial;
+	letter-spacing: 1px;
+}
 
-
-
-  
-  /* 按钮样式 */
-  .bottom button {
-    width: 450px;
-    padding: 10px 20px;
-    background-color: #8296df;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-size: 22px;
-    font-family: "Microsoft YaHei", Arial;
-    letter-spacing: 1px;
-  }
-  
-  .textbox button:hover {
-    background-color: #45a049;
-  }
+.textbox button:hover {
+	background-color: #45a049;
+}
