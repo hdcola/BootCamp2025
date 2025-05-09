@@ -17,7 +17,9 @@ function restartGame() {
 function checkGuess() {
 	guess0 = -1
 	guess0 = document.getElementById('guess').value
-	if (guess0 > random_num) {
+	if (guess0 > 999 || guess0 < 0 || guess0 === '') {
+		alert('please follow the rule!')
+	} else if (guess0 > random_num) {
 		show.push(guess0 + 'b')
 		document.getElementById('result').innerText = show
 		document.getElementById('processing').innerText =
