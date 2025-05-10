@@ -112,6 +112,7 @@
       const submitButton = document.getElementById("submit");
       const resetButton = document.getElementById("reset");
 
+      console.log("randomNumber: " + randomNumber);
       function emptyInput() {
         guessInput.value = "";
       }
@@ -157,13 +158,33 @@
 
           if (bestScore === null || history.length < bestScore) {
             bestScore = history.length;
+            const duration = Math.min(2, 0.3 + bestScore * 0.1) + "s";
+            bestScoreDiv.style.setProperty('--heartbeat-duration', duration);
+            bestScoreDiv.classList.add("heartbeat");
             bestScoreDiv.innerText =
               "Best Score: " + (bestScore + 1) + " attempts";
+            
           }
 
           submitButton.disabled = true;
           guessInput.disabled = true;
           guessInput.placeholder = "Bingo! You guessed it!";
+
+          if (bestScore == 1) {
+            bestScoreDiv.style.color = "red";
+          } else if (bestScore == 2) {
+            bestScoreDiv.style.color = "purple";
+          } else if (bestScore == 3) {
+            bestScoreDiv.style.color = "green";
+          } else if (bestScore == 4) {
+            bestScoreDiv.style.color = "orange";
+          } else if (bestScore == 5) {
+            bestScoreDiv.style.color = "blue";
+          } else {
+            bestScoreDiv.style.color = "black";
+            bestScoreDiv.classList.remove("heartbeat");
+            bestScoreDiv.classList.add("spin");
+          }
 
          
         }
@@ -217,5 +238,27 @@
         }
       });
     </script>
+    <style>
+      @keyframes heartbeat {
+        0% { transform: scale(1); }
+        25% { transform: scale(1.2); }
+        50% { transform: scale(1); }
+        75% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .spin {
+        animation: spin 2s infinite linear;
+      }
+
+      .heartbeat {
+        animation: heartbeat var(--heartbeat-duration, 0.4s) infinite ease-in-out;
+      }
+    </style>
   </body>
 </html>
