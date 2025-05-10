@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      background-color: #f0f0f0;
+    "
+  >
+    <form onsubmit="event.preventDefault(); guessNumber()">
+      <div style="width: 500px">
+        <input
+          type="text"
+          id="guess"
+          placeholder="Enter a number between 1 and 1000"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            font-weight: 700;
+            font-size: 20px;
+          "
+        />
+
+        <div
+          id="error-message"
+          style="
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span style="color: red; font-weight: 700; padding: 10px"
+            >I know you will do this =. = This is not a number!!!!!</span
+          >
+          <span>Please enter a number between 0 and 999.</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px">
+        <button
+          id="submit"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 20px;
+            background-color: coral;
+          "
+          type="submit"
+        >
+          Submit
+        </button>
+
+        <button
+          id="reset"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 20px;
+          "
+          type="reset"
+          onclick="()=>console.log('reset clicked');"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <div>
+      <p id="result"></p>
+    </div>
+    <div>
+      <p id="attempts">
+        <span style="font-weight: 700">Attempts:</span>
+        <span id="attempts-count">0</span>
+      </p>
+    </div>
+    <div id="best-score" style="font-weight: 700"></div>
+    <div id="last-score" style="font-weight: 700"></div>
+    <div>
+      <p style="font-weight: 700">History:</p>
+      <ul id="history-list" style="padding-left: 20px"></ul>
+    </div>
+
+    <script>
+      let randomNumber = Math.floor(Math.random() * 1000) + 1;
+      const history = [];
+      let gameOver = false;
+      let bestScore = null;
+      let lastScore = null;
+      const resultDiv = document.getElementById("result");
+      const lastScoreDiv = document.getElementById("last-score");
+      const bestScoreDiv = document.getElementById("best-score");
+      const attemptsCountDiv = document.getElementById("attempts-count");
+      const historyList = document.getElementById("history-list");
+      const errorMessageDiv = document.getElementById("error-message");
+      const guessInput = document.getElementById("guess");
+      const submitButton = document.getElementById("submit");
+      const resetButton = document.getElementById("reset");
+
+      console.log("randomNumber: " + randomNumber);
+      function emptyInput() {
+        guessInput.value = "";
+      }
+
+      function diaplayLastAttemptScore() {
+        lastScore = inputNumber;
+        lastScoreDiv.style.color = "green";
+        lastScoreDiv.style.fontWeight = "800";
+        lastScoreDiv.innerText = "Last Attempt Score: " + lastScore;
+      }
+
+      function guessNumber() {
+        console.log("guessNumber called " + randomNumber);
+        if (gameOver) {
+          alert("Game over! Please reset to play again.");
+          return;
+        }
+
+        const inputNumber = Number(guessInput.value);
+
+        if (
+          isNaN(inputNumber) ||
+          inputNumber < 0 ||
+          inputNumber == 0 ||
+          inputNumber > 999
+        ) {
+          errorMessageDiv.style.display = "flex";
+          emptyInput();
+          return;
+        } else {
+          errorMessageDiv.style.display = "none";
+        }
+
+        if (inputNumber < randomNumber) {
+          resultDiv.style.color = "blue";
+          resultDiv.innerText = "Too low";
+        } else if (inputNumber > randomNumber) {
+          resultDiv.style.color = "red";
+          resultDiv.innerText = "Too high";
+        } else {
+          resultDiv.style.color = "green";
+          resultDiv.innerText = "Correct!";
+
+          if (bestScore === null || history.length < bestScore) {
+            bestScore = history.length;
+            const duration = Math.min(2, 0.3 + bestScore * 0.1) + "s";
+            bestScoreDiv.style.setProperty('--heartbeat-duration', duration);
+            bestScoreDiv.classList.add("heartbeat");
+            bestScoreDiv.innerText =
+              "Best Score: " + (bestScore + 1) + " attempts";
+            
+          }
+
+          submitButton.disabled = true;
+          guessInput.disabled = true;
+          guessInput.placeholder = "Bingo! You guessed it!";
+
+          if (bestScore == 1) {
+            bestScoreDiv.style.color = "red";
+          } else if (bestScore == 2) {
+            bestScoreDiv.style.color = "purple";
+          } else if (bestScore == 3) {
+            bestScoreDiv.style.color = "green";
+          } else if (bestScore == 4) {
+            bestScoreDiv.style.color = "orange";
+          } else if (bestScore == 5) {
+            bestScoreDiv.style.color = "blue";
+          } else {
+            bestScoreDiv.style.color = "black";
+            bestScoreDiv.classList.remove("heartbeat");
+            bestScoreDiv.classList.add("spin");
+          }
+
+         
+        }
+
+        if (!gameOver) {
+          history.push(inputNumber);
+
+          attemptsCountDiv.innerText = history.length;
+
+          const listItem = document.createElement("li");
+          listItem.innerText = inputNumber;
+          if (inputNumber < randomNumber) {
+            listItem.style.color = "blue";
+            listItem.innerText += " (Too low)";
+          } else if (inputNumber > randomNumber) {
+            listItem.style.color = "red";
+            listItem.innerText += " (Too high)";
+          } else {
+            listItem.style.color = "green";
+          }
+          historyList.appendChild(listItem);
+        }
+
+        emptyInput();
+
+        gameOver = inputNumber === randomNumber ? true : false;
+      }
+
+      resetButton.addEventListener("click", () => {
+        randomNumber = Math.floor(Math.random() * 1000) + 1;
+        gameOver = false;
+        submitButton.disabled = false;
+        guessInput.disabled = false;
+        guessInput.placeholder = "Enter a number between 1 and 1000";
+        emptyInput();
+        resultDiv.innerText = "";
+        attemptsCountDiv.innerText = "0";
+        errorMessageDiv.style.display = "none";
+        history.length = 0;
+        historyList.innerHTML = "";
+        if (bestScore !== null) {
+          bestScoreDiv.innerText =
+            "Best Score: " + (bestScore + 1) + " attempts";
+        } else {
+          bestScoreDiv.innerText = "";
+        }
+        if (lastScore !== null) {
+          lastScoreDiv.innerText = "Last Correct Score: " + lastScore;
+        } else {
+          lastScoreDiv.innerText = "";
+        }
+      });
+    </script>
+    <style>
+      @keyframes heartbeat {
+        0% { transform: scale(1); }
+        25% { transform: scale(1.2); }
+        50% { transform: scale(1); }
+        75% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .spin {
+        animation: spin 2s infinite linear;
+      }
+
+      .heartbeat {
+        animation: heartbeat var(--heartbeat-duration, 0.4s) infinite ease-in-out;
+      }
+    </style>
+  </body>
+</html>
