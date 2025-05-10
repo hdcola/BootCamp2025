@@ -154,7 +154,8 @@
 
           document.getElementById("submit").disabled = true;
           document.getElementById("guess").disabled = true;
-          document.getElementById("guess").placeholder = "Bingo! You guessed it!";
+          document.getElementById("guess").placeholder =
+            "Bingo! You guessed it!";
         }
 
         if (!gameOver) {
@@ -184,6 +185,9 @@
         randomNumber = Math.floor(Math.random() * 1000) + 1;
         gameOver = false;
         document.getElementById("submit").disabled = false;
+        document.getElementById("guess").disabled = false;
+        document.getElementById("guess").placeholder =
+          "Enter a number between 1 and 1000";
         emptyInput();
         document.getElementById("result").innerText = "";
         document.getElementById("attempts-count").innerText = "0";
