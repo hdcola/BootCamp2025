@@ -35,6 +35,7 @@ function checkGuess() {
 		document.getElementById('processing').innerText =
 			'Congrats!!! You are correct!'
 	}
+	document.getElementById('guess').value = ''
 }
 
 restartGame()
