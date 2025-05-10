@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      background-color: #f0f0f0;
+    "
+  >
+    <form onsubmit="event.preventDefault(); guessNumber()">
+      <div style="width: 500px">
+        <input
+          type="text"
+          id="guess"
+          placeholder="Enter a number between 1 and 1000"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            font-weight: 700;
+            font-size: 20px;
+          "
+        />
+
+        <div
+          id="error-message"
+          style="
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <span style="color: red; font-weight: 700; padding: 10px"
+            >I know you will do this =. = This is not a number!!!!!</span
+          >
+          <span>Please enter a number between 0 and 999.</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px">
+        <button
+          id="submit"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 20px;
+            background-color: coral;
+          "
+          type="submit"
+        >
+          Submit
+        </button>
+
+        <button
+          id="reset"
+          style="
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-weight: 500;
+            font-size: 20px;
+          "
+          type="reset"
+          onclick="()=>console.log('reset clicked');"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <div>
+      <p id="result"></p>
+    </div>
+    <div>
+      <p id="attempts">
+        <span style="font-weight: 700">Attempts:</span>
+        <span id="attempts-count">0</span>
+      </p>
+    </div>
+    <div id="best-score" style="font-weight: 700"></div>
+    <div id="last-score" style="font-weight: 700"></div>
+    <div>
+      <p style="font-weight: 700">History:</p>
+      <ul id="history-list" style="padding-left: 20px"></ul>
+    </div>
+
+    <script>
+      let randomNumber = Math.floor(Math.random() * 1000) + 1;
+      const history = [];
+      let gameOver = false;
+      let bestScore = null;
+      let lastScore = null;
+
+      function emptyInput() {
+        document.getElementById("guess").value = "";
+      }
+
+      function guessNumber() {
+        console.log("guessNumber called " + randomNumber);
+        if (gameOver) {
+          alert("Game over! Please reset to play again.");
+          return;
+        }
+
+        const inputNumber = Number(document.getElementById("guess").value);
+
+        if (
+          isNaN(inputNumber) ||
+          inputNumber < 0 ||
+          inputNumber == 0 ||
+          inputNumber > 999
+        ) {
+          document.getElementById("error-message").style.display = "flex";
+          emptyInput();
+          return;
+        } else {
+          document.getElementById("error-message").style.display = "none";
+        }
+
+        if (inputNumber < randomNumber) {
+          document.getElementById("result").style.color = "blue";
+          document.getElementById("result").innerText = "Too low";
+        } else if (inputNumber > randomNumber) {
+          document.getElementById("result").style.color = "red";
+          document.getElementById("result").innerText = "Too high";
+        } else {
+          document.getElementById("result").style.color = "green";
+          document.getElementById("result").innerText = "Correct!";
+          gameOver = true;
+
+          lastScore = inputNumber;
+          document.getElementById("last-score").style.color = "green";
+          document.getElementById("last-score").style.fontWeight = "800";
+          document.getElementById("last-score").innerText =
+            "Last Attempt Score: " + lastScore;
+
+          if (bestScore === null || history.length < bestScore) {
+            bestScore = history.length;
+            document.getElementById("best-score").innerText =
+              "Best Score: " + bestScore + " attempts";
+          }
+
+          document.getElementById("submit").disabled = true;
+          document.getElementById("guess").disabled = true;
+        }
+
+        if (!gameOver) {
+          history.push(inputNumber);
+
+          document.getElementById("attempts-count").innerText = history.length;
+
+          const historyList = document.getElementById("history-list");
+          const listItem = document.createElement("li");
+          listItem.innerText = inputNumber;
+          if (inputNumber < randomNumber) {
+            listItem.style.color = "blue";
+            listItem.innerText += " (Too low)";
+          } else if (inputNumber > randomNumber) {
+            listItem.style.color = "red";
+            listItem.innerText += " (Too high)";
+          } else {
+            listItem.style.color = "green";
+          }
+          historyList.appendChild(listItem);
+        }
+
+        emptyInput();
+      }
+
+      document.getElementById("reset").addEventListener("click", () => {
+        randomNumber = Math.floor(Math.random() * 1000) + 1;
+        gameOver = false;
+        document.getElementById("submit").disabled = false;
+        emptyInput();
+        document.getElementById("result").innerText = "";
+        document.getElementById("attempts-count").innerText = "0";
+        document.getElementById("error-message").style.display = "none";
+        history.length = 0;
+        document.getElementById("history-list").innerHTML = "";
+        if (bestScore !== null) {
+          document.getElementById("best-score").innerText =
+            "Best Score: " + bestScore + " attempts";
+        } else {
+          document.getElementById("best-score").innerText = "";
+        }
+        if (lastScore !== null) {
+          document.getElementById("last-score").innerText =
+            "Last Correct Score: " + lastScore;
+        } else {
+          document.getElementById("last-score").innerText = "";
+        }
+      });
+    </script>
+  </body>
+</html>
