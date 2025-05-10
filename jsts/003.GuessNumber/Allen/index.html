@@ -102,9 +102,25 @@
       let gameOver = false;
       let bestScore = null;
       let lastScore = null;
+      const resultDiv = document.getElementById("result");
+      const lastScoreDiv = document.getElementById("last-score");
+      const bestScoreDiv = document.getElementById("best-score");
+      const attemptsCountDiv = document.getElementById("attempts-count");
+      const historyList = document.getElementById("history-list");
+      const errorMessageDiv = document.getElementById("error-message");
+      const guessInput = document.getElementById("guess");
+      const submitButton = document.getElementById("submit");
+      const resetButton = document.getElementById("reset");
 
       function emptyInput() {
-        document.getElementById("guess").value = "";
+        guessInput.value = "";
+      }
+
+      function diaplayLastAttemptScore() {
+        lastScore = inputNumber;
+        lastScoreDiv.style.color = "green";
+        lastScoreDiv.style.fontWeight = "800";
+        lastScoreDiv.innerText = "Last Attempt Score: " + lastScore;
       }
 
       function guessNumber() {
@@ -114,7 +130,7 @@
           return;
         }
 
-        const inputNumber = Number(document.getElementById("guess").value);
+        const inputNumber = Number(guessInput.value);
 
         if (
           isNaN(inputNumber) ||
@@ -122,48 +138,41 @@
           inputNumber == 0 ||
           inputNumber > 999
         ) {
-          document.getElementById("error-message").style.display = "flex";
+          errorMessageDiv.style.display = "flex";
           emptyInput();
           return;
         } else {
-          document.getElementById("error-message").style.display = "none";
+          errorMessageDiv.style.display = "none";
         }
 
         if (inputNumber < randomNumber) {
-          document.getElementById("result").style.color = "blue";
-          document.getElementById("result").innerText = "Too low";
+          resultDiv.style.color = "blue";
+          resultDiv.innerText = "Too low";
         } else if (inputNumber > randomNumber) {
-          document.getElementById("result").style.color = "red";
-          document.getElementById("result").innerText = "Too high";
+          resultDiv.style.color = "red";
+          resultDiv.innerText = "Too high";
         } else {
-          document.getElementById("result").style.color = "green";
-          document.getElementById("result").innerText = "Correct!";
-          gameOver = true;
-
-          lastScore = inputNumber;
-          document.getElementById("last-score").style.color = "green";
-          document.getElementById("last-score").style.fontWeight = "800";
-          document.getElementById("last-score").innerText =
-            "Last Attempt Score: " + lastScore;
+          resultDiv.style.color = "green";
+          resultDiv.innerText = "Correct!";
 
           if (bestScore === null || history.length < bestScore) {
             bestScore = history.length;
-            document.getElementById("best-score").innerText =
-              "Best Score: " + bestScore + " attempts";
+            bestScoreDiv.innerText =
+              "Best Score: " + (bestScore + 1) + " attempts";
           }
 
-          document.getElementById("submit").disabled = true;
-          document.getElementById("guess").disabled = true;
-          document.getElementById("guess").placeholder =
-            "Bingo! You guessed it!";
+          submitButton.disabled = true;
+          guessInput.disabled = true;
+          guessInput.placeholder = "Bingo! You guessed it!";
+
+         
         }
 
         if (!gameOver) {
           history.push(inputNumber);
 
-          document.getElementById("attempts-count").innerText = history.length;
+          attemptsCountDiv.innerText = history.length;
 
-          const historyList = document.getElementById("history-list");
           const listItem = document.createElement("li");
           listItem.innerText = inputNumber;
           if (inputNumber < randomNumber) {
@@ -179,32 +188,32 @@
         }
 
         emptyInput();
+
+        gameOver = inputNumber === randomNumber ? true : false;
       }
 
-      document.getElementById("reset").addEventListener("click", () => {
+      resetButton.addEventListener("click", () => {
         randomNumber = Math.floor(Math.random() * 1000) + 1;
         gameOver = false;
-        document.getElementById("submit").disabled = false;
-        document.getElementById("guess").disabled = false;
-        document.getElementById("guess").placeholder =
-          "Enter a number between 1 and 1000";
+        submitButton.disabled = false;
+        guessInput.disabled = false;
+        guessInput.placeholder = "Enter a number between 1 and 1000";
         emptyInput();
-        document.getElementById("result").innerText = "";
-        document.getElementById("attempts-count").innerText = "0";
-        document.getElementById("error-message").style.display = "none";
+        resultDiv.innerText = "";
+        attemptsCountDiv.innerText = "0";
+        errorMessageDiv.style.display = "none";
         history.length = 0;
-        document.getElementById("history-list").innerHTML = "";
+        historyList.innerHTML = "";
         if (bestScore !== null) {
-          document.getElementById("best-score").innerText =
-            "Best Score: " + bestScore + " attempts";
+          bestScoreDiv.innerText =
+            "Best Score: " + (bestScore + 1) + " attempts";
         } else {
-          document.getElementById("best-score").innerText = "";
+          bestScoreDiv.innerText = "";
         }
         if (lastScore !== null) {
-          document.getElementById("last-score").innerText =
-            "Last Correct Score: " + lastScore;
+          lastScoreDiv.innerText = "Last Correct Score: " + lastScore;
         } else {
-          document.getElementById("last-score").innerText = "";
+          lastScoreDiv.innerText = "";
         }
       });
     </script>
