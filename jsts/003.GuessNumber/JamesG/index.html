@@ -8,7 +8,7 @@
 	<body>
 		<div class="game-container">
 			<div>Guess a Number 0 ~ 999</div>
-			<div id="guesspart_container">
+			<form id="guesspart_container" onsubmit="return false">
 				<div id="Numbers">Number:</div>
 				<input
 					type="number"
@@ -17,8 +17,15 @@
 					min="0"
 					max="999"
 				/>
-				<button id="guessbt" onclick="checkGuess()">Guess</button>
-			</div>
+				<button
+					id="guessbt"
+					type="submit"
+					value="guess"
+					onclick="checkGuess()"
+				>
+					Guess
+				</button>
+			</form>
 			<div id="result"></div>
 			<div id="processing"></div>
 			<button id="startbt" onclick="restartGame()">New Game</button>

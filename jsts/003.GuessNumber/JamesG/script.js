@@ -10,7 +10,7 @@
 
 function restartGame() {
 	random_num = Math.floor(Math.random() * 1000)
-	document.getElementById('result').innerText = 'please guess'
+	document.getElementById('processing').innerText = 'Game Start'
 	show = []
 }
 
@@ -36,3 +36,5 @@ function checkGuess() {
 			'Congrats!!! You are correct!'
 	}
 }
+
+restartGame()
