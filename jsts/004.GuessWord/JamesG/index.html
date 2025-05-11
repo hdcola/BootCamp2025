@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Guess_World</title>
+	</head>
+
+	<body>
+		<p id="wordDisplay">猜词游戏</p>
+		<input type="text" id="letterInput" maxlength="1" />
+
+		<buttom onclick="guessletters()">猜单词</buttom>
+		<button onclick="getRandomWord()">获取单词</button>
+		<p id="result">点击按钮获取一个英文单词</p>
+
+		<script>
+			const input = document.getElementById('letterInput')
+
+			// 替换已有字母，只保留新的有效字母
+			input.addEventListener('keydown', function (event) {
+				// 获取按下的键
+				const key = event.key
+
+				// 如果是字母
+				if (/^[a-zA-Z]$/.test(key)) {
+					// 阻止默认行为，手动设置值为当前按键
+					event.preventDefault()
+					input.value = key
+				}
+				// 如果是其他键（如数字、空格、符号），阻止输入
+				else if (key.length === 1) {
+					event.preventDefault()
+				}
+				// 允许删除键（Backspace、Delete）等控制键
+			})
+
+			function getRandomWord() {
+				fetch('https://random-word-api.herokuapp.com/word')
+					.then((response) => response.json()) // 把响应转成 JSON
+					.then((data) => {
+						randomword = data[0] // 显示单词
+						displayBlanks(randomword.length)
+						uniqueLetters = [...new Set(randomword.split(''))]
+						everyletters = randomword.split('')
+						console.log('真实单词：', randomword)
+						console.log('词组:', uniqueLetters)
+						console.log('词:', everyletters)
+					})
+			}
+
+			function displayBlanks(length) {
+				blanks = Array(randomword.length).fill('_') // "_ _ _ _ ..." 格式
+				document.getElementById('wordDisplay').textContent =
+					blanks.join(' ')
+			}
+
+			function guessletters() {
+				guess0 = document.getElementById('letterInput').value
+				if (!everyletters.includes(guess0)) {
+					document.getElementById('result').textContent =
+						"the letter '" + guess0 + "' not in here!"
+				} else {
+					for (let i = 0; i < randomword.length; i++) {
+						if (guess0 === randomword[i]) {
+							blanks[i] = guess0
+						}
+					}
+					document.getElementById('wordDisplay').textContent =
+						blanks.join(' ')
+				}
+			}
+		</script>
+
+		<style>
+			input {
+				width: 50px;
+				text-align: center;
+				font-size: 20px;
+			}
+		</style>
+	</body>
+</html>
