@@ -7,6 +7,7 @@
 
 	<body>
 		<p id="wordDisplay">猜词游戏</p>
+		<div id="heart"></div>
 		<input type="text" id="letterInput" maxlength="1" />
 
 		<buttom onclick="guessletters()">猜单词</buttom>
@@ -35,13 +36,16 @@
 			})
 
 			function getRandomWord() {
-				fetch('https://random-word-api.herokuapp.com/word')
+				fetch('https://random-word-api.vercel.app/api?words=1')
 					.then((response) => response.json()) // 把响应转成 JSON
 					.then((data) => {
 						randomword = data[0] // 显示单词
+						health = randomword.length * 2
 						displayBlanks(randomword.length)
 						uniqueLetters = [...new Set(randomword.split(''))]
 						everyletters = randomword.split('')
+						document.getElementById('heart').textContent =
+							'❤️'.repeat(health)
 						console.log('真实单词：', randomword)
 						console.log('词组:', uniqueLetters)
 						console.log('词:', everyletters)
@@ -59,14 +63,23 @@
 				if (!everyletters.includes(guess0)) {
 					document.getElementById('result').textContent =
 						"the letter '" + guess0 + "' not in here!"
+					health--
+					document.getElementById('heart').textContent = '❤️'.repeat(
+						health
+					)
 				} else {
 					for (let i = 0; i < randomword.length; i++) {
 						if (guess0 === randomword[i]) {
 							blanks[i] = guess0
 						}
 					}
+					document.getElementById('heart').textContent = '❤️'.repeat(
+						health
+					)
 					document.getElementById('wordDisplay').textContent =
 						blanks.join(' ')
+					document.getElementById('result').textContent =
+						"the letter '" + guess0 + "' is right, keep going!"
 				}
 			}
 		</script>
