@@ -3,19 +3,55 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Guess_World</title>
+		<style>
+			#game_container {
+				position: relative;
+				background-color: rgba(255, 255, 255, 0.983);
+				border-color: rgb(238, 235, 235);
+				border-width: 1px;
+				border-style: solid;
+				border-radius: 20px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
+				display: flex;
+				flex-direction: column;
+				margin: 30px;
+				padding: 20px;
+				width: 520px;
+				height: 250px;
+				text-align: center;
+			}
+
+			input {
+				width: 50px;
+				text-align: center;
+				font-size: 20px;
+			}
+		</style>
 	</head>
 
 	<body>
-		<p id="wordDisplay">猜词游戏</p>
-		<div id="heart"></div>
-		<input type="text" id="letterInput" maxlength="1" />
-
-		<buttom onclick="guessletters()">猜单词</buttom>
-		<button onclick="getRandomWord()">获取单词</button>
-		<p id="result">点击按钮获取一个英文单词</p>
+		<div id="game_container">
+			<div id="wordDisplay">Guess_World</div>
+			<div id="heart">❤️❤️❤️❤️❤️</div>
+			<form id="input_container" onsubmit="return false">
+				<input type="text" id="ltInput" maxlength="1" />
+				<button type="submit" id="guessbt" onclick="guesslt()">
+					猜单词
+				</button>
+				<button id="startbt" onclick="getRandomWord()">
+					Start Game
+				</button>
+			</form>
+			<p id="result">点击按钮获取一个英文单词</p>
+			<p id="guesshist"></p>
+			<p id="test">test</p>
+		</div>
 
 		<script>
+			let alreadyguessed = []
+			let health = 0
 			const input = document.getElementById('letterInput')
+			getRandomWord()
 
 			// 替换已有字母，只保留新的有效字母
 			input.addEventListener('keydown', function (event) {
@@ -36,6 +72,7 @@
 			})
 
 			function getRandomWord() {
+				alreadyguessed = []
 				fetch('https://random-word-api.vercel.app/api?words=1')
 					.then((response) => response.json()) // 把响应转成 JSON
 					.then((data) => {
@@ -46,9 +83,10 @@
 						everyletters = randomword.split('')
 						document.getElementById('heart').textContent =
 							'❤️'.repeat(health)
+						document.getElementById('guesshist').textContent =
+							'you guessed: ' + alreadyguessed + '!'
 						console.log('真实单词：', randomword)
 						console.log('词组:', uniqueLetters)
-						console.log('词:', everyletters)
 					})
 			}
 
@@ -58,38 +96,147 @@
 					blanks.join(' ')
 			}
 
-			function guessletters() {
-				guess0 = document.getElementById('letterInput').value
-				if (!everyletters.includes(guess0)) {
-					document.getElementById('result').textContent =
-						"the letter '" + guess0 + "' not in here!"
-					health--
-					document.getElementById('heart').textContent = '❤️'.repeat(
-						health
-					)
-				} else {
-					for (let i = 0; i < randomword.length; i++) {
-						if (guess0 === randomword[i]) {
-							blanks[i] = guess0
+			function guesslt() {
+				guess0 = document.getElementById('ltInput').value
+				if (health > 0 || uniqueLetters.length > 0) {
+					//猜重复的话
+					if (alreadyguessed.includes(guess0)) {
+						document.getElementById('result').textContent =
+							"the letter '" +
+							guess0 +
+							"' have been tried, please try again!"
+						document.getElementById('heart').textContent =
+							'❤️'.repeat(health)
+						document.getElementById('guesshist').textContent =
+							'you guessed: ' + alreadyguessed + '!'
+					} else if (!everyletters.includes(guess0)) {
+						//猜错的话
+						document.getElementById('result').textContent =
+							"the letter '" + guess0 + "' not in here!"
+						health--
+						alreadyguessed.push(guess0)
+						document.getElementById('heart').textContent =
+							'❤️'.repeat(health)
+						document.getElementById('guesshist').textContent =
+							'you guessed: ' + alreadyguessed + '!'
+						if (health === 0) {
+							if (
+								confirm(
+									'you loose the game, the real word is ' +
+										randomword +
+										'! wanna paly again?'
+								)
+							) {
+								getRandomWord()
+							} else {
+								return
+							}
+						}
+					} else {
+						//猜对的话
+						for (let i = 0; i < randomword.length; i++) {
+							if (guess0 === randomword[i]) {
+								blanks[i] = guess0
+							}
+						}
+						uniqueLetters = uniqueLetters.filter((x) => x != guess0)
+						document.getElementById('test').textContent =
+							uniqueLetters
+						console.log('词:', uniqueLetters)
+						document.getElementById('heart').textContent =
+							'❤️'.repeat(health)
+						document.getElementById('wordDisplay').textContent =
+							blanks.join(' ')
+						document.getElementById('result').textContent =
+							"the letter '" + guess0 + "' is right, keep going!"
+						document.getElementById('guesshist').textContent =
+							'you guessed: ' + alreadyguessed
+
+						if (uniqueLetters.length === 0) {
+							document.getElementById('result').textContent =
+								"Congrate!! '" +
+								randomword +
+								"' is the word, wanna play again?"
+							return
 						}
 					}
-					document.getElementById('heart').textContent = '❤️'.repeat(
-						health
-					)
-					document.getElementById('wordDisplay').textContent =
-						blanks.join(' ')
-					document.getElementById('result').textContent =
-						"the letter '" + guess0 + "' is right, keep going!"
+				} else if (health === 0) {
+					if (
+						confirm(
+							'you loose the game, the real word is ' +
+								randomword +
+								'! wanna paly again?'
+						)
+					) {
+						getRandomWord()
+					} else {
+						return
+					}
 				}
 			}
-		</script>
 
-		<style>
-			input {
-				width: 50px;
-				text-align: center;
-				font-size: 20px;
-			}
-		</style>
+			// function guessletters() {
+			// 	guess0 = document.getElementById('letterInput').value
+			// 	if (health > 0) {
+			// 		// 猜错了怎么处理
+			// 		if (!everyletters.includes(guess0)) {
+			// 			document.getElementById('result').textContent =
+			// 				"the letter '" + guess0 + "' not in here!"
+			// 			health = health - 1
+			// 			alreadyguessed.push(guess0)
+			// 			document.getElementById('heart').textContent =
+			// 				'❤️'.repeat(health)
+			// 			document.getElementById('guesshist').textContent =
+			// 				'you guessed: ' + alreadyguessed + '!'
+			// 			if (health === 0) {
+			// 				if (
+			// 					confirm(
+			// 						'you loose the game, the real word is ' +
+			// 							randomword +
+			// 							'! wanna paly again?'
+			// 					)
+			// 				) {
+			// 					getRandomWord()
+			// 				} else {
+			// 					return
+			// 				}
+			// 			}
+			// 		} else {
+			// 			//猜对了怎么处理
+			// 			for (let i = 0; i < randomword.length; i++) {
+			// 				if (guess0 === randomword[i]) {
+			// 					blanks[i] = guess0
+			// 				}
+			// 			}
+			// 			uniqueLetters = uniqueLetters.filter((x) => x != guess0)
+			// 			document.getElementById('test').textContent =
+			// 				uniqueLetters
+			// 			console.log('词:', uniqueLetters)
+
+			// 			if (uniqueLetters.length === 0) {
+			//                 document.getElementById('wordDisplay').textContent =
+			// 				blanks.join(' ')
+			// 				document.getElementById('result').textContent =
+			// 					"Congrate!! '" +
+			// 					randomword +
+			// 					"' is the word, wanna play again?"
+			// 				return
+			// 			}
+			// 			document.getElementById('heart').textContent =
+			// 				'❤️'.repeat(health)
+			// 			document.getElementById('wordDisplay').textContent =
+			// 				blanks.join(' ')
+			// 			document.getElementById('result').textContent =
+			// 				"the letter '" + guess0 + "' is right, keep going!"
+			// 			document.getElementById('guesshist').textContent =
+			// 				'you guessed: ' + alreadyguessed
+			// 		}
+			// 	} else {
+			// 		//没血了怎么处理
+			// 		alert('no more chance, please try again!')
+			// 		getRandomWord()
+			// 	}
+			// }
+		</script>
 	</body>
 </html>
