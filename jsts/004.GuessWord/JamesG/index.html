@@ -177,7 +177,7 @@
 
 			function guesslt() {
 				guess0 = document.getElementById('ltInput').value
-				if (health > 0 && uniqueLetters.length > 0) {
+				if (health > 0 && uniqueLetters.length > 0 && guess0 != '') {
 					//先判断他可以猜
 					if (alreadyguessed.includes(guess0)) {
 						//猜重复的话:
@@ -250,22 +250,26 @@
 					} else {
 						return
 					}
-				} else {
+				} else if (uniqueLetters.length === 0) {
 					document.getElementById('result').textContent =
 						"Congrate!! '" +
 						randomword +
 						"' is the word, wanna play again?"
 					return
+				} else {
+					document.getElementById('result').textContent = '新号,别搞'
 				}
 			}
 
 			//esc重开游戏
 			document.addEventListener('keydown', function (e) {
 				if (e.key === 'Escape') {
-					if (confirm('wanna play again?')) {
-						getRandomWord()
-					} else {
-					}
+					setTimeout(() => {
+						if (confirm('wanna play again?')) {
+							getRandomWord()
+						} else {
+						}
+					}, 110)
 				}
 			})
 		</script>
