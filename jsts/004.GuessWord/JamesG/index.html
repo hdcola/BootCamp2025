@@ -99,10 +99,15 @@
 			<div id="heart">❤️❤️❤️❤️❤️</div>
 			<form id="input_container" onsubmit="return false">
 				<input type="text" id="ltInput" maxlength="1" />
-				<button type="submit" id="guessbt" onclick="guesslt()">
+				<button
+					tabindex="0"
+					type="submit"
+					id="guessbt"
+					onclick="guesslt()"
+				>
 					guess
 				</button>
-				<button id="startbt" onclick="getRandomWord()">
+				<button tabindex="0" id="startbt" onclick="getRandomWord()">
 					Start Game
 				</button>
 			</form>
@@ -264,12 +269,8 @@
 			//esc重开游戏
 			document.addEventListener('keydown', function (e) {
 				if (e.key === 'Escape') {
-					setTimeout(() => {
-						if (confirm('wanna play again?')) {
-							getRandomWord()
-						} else {
-						}
-					}, 110)
+					alert('the game will restart')
+					getRandomWord()
 				}
 			})
 		</script>
