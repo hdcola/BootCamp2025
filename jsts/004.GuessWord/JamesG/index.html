@@ -103,7 +103,11 @@
 
 	<body>
 		<div id="game_container">
-			<select id="difficulty-select" onchange="handleDifficultyChange()">
+			<select
+				tabindex="0"
+				id="difficulty-select"
+				onchange="handleDifficultyChange()"
+			>
 				<option value="" disabled selected>选择难度</option>
 				<option value="easy">简单</option>
 				<option value="hard">困难</option>
@@ -112,7 +116,7 @@
 			<div id="wordDisplay">Guess_World</div>
 			<div id="heart">❤️❤️❤️❤️❤️</div>
 			<form id="input_container" onsubmit="return false">
-				<input type="text" id="ltInput" maxlength="1" />
+				<input type="text" id="ltInput" maxlength="1" tabindex="0" />
 				<button
 					tabindex="0"
 					type="submit"
@@ -303,6 +307,31 @@
 
 				getRandomWord() // 切换难度时刷新单词
 			}
+
+			document.addEventListener('keydown', function (e) {
+				if (e.key === 'Tab') {
+					const focusables = Array.from(
+						document.querySelectorAll(
+							'button, a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+						)
+					).filter((el) => !el.disabled && el.offsetParent !== null) // 过滤隐藏/禁用元素
+
+					if (focusables.length === 0) return
+
+					const first = focusables[0]
+					const last = focusables[focusables.length - 1]
+
+					if (e.shiftKey && document.activeElement === first) {
+						// Shift+Tab 在第一个时，回到最后
+						e.preventDefault()
+						last.focus()
+					} else if (!e.shiftKey && document.activeElement === last) {
+						// Tab 在最后一个时，回到第一个
+						e.preventDefault()
+						first.focus()
+					}
+				}
+			})
 		</script>
 	</body>
 </html>
