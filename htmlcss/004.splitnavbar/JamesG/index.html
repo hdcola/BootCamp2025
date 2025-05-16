@@ -6,52 +6,33 @@
 
 		<style>
 			.total_bar {
-				background-color: rgb(149, 151, 149);
+				background-color: rgb(9, 9, 9);
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
 			}
 
 			.first {
-				background-color: rgba(214, 183, 46, 0.791);
+				background-color: rgb(9, 9, 9);
 				display: flex;
 				flex-direction: row;
 			}
 
-			#second {
-				background-color: rgba(75, 100, 76, 0.828);
+			.word:hover {
+				background-color: rgb(203, 202, 202);
+				color: black;
+			}
+
+			.last {
+				background-color: rgb(23, 105, 23);
 				display: flex;
 				flex-direction: row;
-			}
-
-			.block1 {
-				position: relative;
-				background-color: rgb(138, 137, 224);
-				width: 60px;
-				height: 60px;
-				align-items: center;
-				justify-content: center;
-			}
-
-			.block1:hover {
-				background-color: black;
-			}
-
-			.block_r:hover {
-				background-color: black;
-			}
-
-			.block_r {
-				position: relative;
-				background-color: rgb(128, 208, 128);
-				width: 60px;
-				height: 60px;
-				align-items: center;
-				justify-content: center;
 			}
 
 			.word {
 				color: rgb(241, 246, 251);
+				padding: 15px;
+				text-decoration: none;
 				font-size: 15px;
 				font-family: Georgia, 'Times New Roman', Times, serif;
 				justify-content: center;
@@ -62,19 +43,12 @@
 	<body>
 		<div class="total_bar">
 			<div class="first">
-				<div class="block_r">
-					<i class="word">home</i>
-				</div>
-				<div class="block_r">
-					<i class="word">News</i>
-				</div>
-				<div class="block_r">
-					<i class="word">Contact</i>
-				</div>
+				<a class="word" href="home">home</a>
+				<a class="word" href="News">News</a>
+				<a class="word" href="Contact">Contact</a>
 			</div>
-
-			<div class="block1">
-				<i class="word">Help</i>
+			<div class="last">
+				<a class="word" href="help">Help</a>
 			</div>
 		</div>
 	</body>

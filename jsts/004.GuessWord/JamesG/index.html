@@ -90,11 +90,25 @@
 				font-family: Arial, Helvetica, sans-serif;
 				margin: 20px;
 			}
+
+			#difficulty-select {
+				width: 100px;
+				margin: 10px;
+				padding: 5px;
+				font-size: 16px;
+				border-radius: 8px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div id="game_container">
+			<select id="difficulty-select" onchange="handleDifficultyChange()">
+				<option value="" disabled selected>选择难度</option>
+				<option value="easy">简单</option>
+				<option value="hard">困难</option>
+			</select>
+
 			<div id="wordDisplay">Guess_World</div>
 			<div id="heart">❤️❤️❤️❤️❤️</div>
 			<form id="input_container" onsubmit="return false">
@@ -122,6 +136,7 @@
 			let everyletters = []
 			const input = document.getElementById('ltInput')
 			getRandomWord()
+			let difficulty = 'easy'
 
 			// 替换已有字母，只保留新的有效字母
 			input.addEventListener('keydown', function (event) {
@@ -148,7 +163,11 @@
 					.then((response) => response.json()) // 把响应转成 JSON
 					.then((data) => {
 						randomword = data[0] // 显示单词
-						health = randomword.length * 2
+						if (difficulty === 'easy') {
+							health = randomword.length * 2
+						} else if (difficulty === 'hard') {
+							health = Math.floor(randomword.length * 1.5)
+						}
 						displayBlanks(randomword.length)
 						uniqueLetters = [...new Set(randomword.split(''))]
 						everyletters = randomword.split('')
@@ -273,6 +292,17 @@
 					getRandomWord()
 				}
 			})
+
+			function handleDifficultyChange() {
+				const select = document.getElementById('difficulty-select')
+				const selectedValue = select.value
+
+				if (!selectedValue) return // 没有选择有效难度
+
+				difficulty = selectedValue
+
+				getRandomWord() // 切换难度时刷新单词
+			}
 		</script>
 	</body>
 </html>
