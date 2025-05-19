@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<title>操作框切换内容</title>
+		<style>
+			.container {
+				width: 400px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				overflow: hidden;
+				font-family: Arial;
+			}
+
+			.tabs {
+				display: flex;
+				background-color: #7a575775;
+			}
+
+			.tab {
+				flex: 1;
+				padding: 10px;
+				text-align: center;
+				cursor: pointer;
+				border-right: 1px solid #ccc;
+			}
+
+			.tab.active {
+				background-color: #e3d4d4;
+				font-weight: bold;
+			}
+
+			.content {
+				padding: 20px;
+				display: none;
+			}
+
+			.content.active {
+				border-style: solid;
+				border-width: 2px;
+				border-color: rgba(175, 171, 171, 0.841);
+				margin: 10px;
+
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="tabs">
+				<div class="tab active" onclick="switchTab(0)">Tab 1</div>
+				<div class="tab" onclick="switchTab(1)">Tab 2</div>
+				<div class="tab" onclick="switchTab(2)">Tab 3</div>
+			</div>
+			<div class="content active">
+				<h3>内容一</h3>
+				<p>这是第一个标签的内容。</p>
+			</div>
+			<div class="content">
+				<h2 style="color: green">内容二</h2>
+				<ul>
+					<li>列表项 A</li>
+					<li>列表项 B</li>
+				</ul>
+			</div>
+			<div class="content">
+				<h4 style="text-align: center">内容三</h4>
+				<p>你可以在这里放任何内容，例如图片、按钮等。</p>
+			</div>
+			<div id="test">吃葡萄不吐葡萄皮</div>
+		</div>
+
+		<script>
+			function switchTab(index) {
+				const tabs = document.querySelectorAll('.tab')
+				document.getElementById('test').innerHTML = Array.from(tabs)
+				const contents = document.querySelectorAll('.content')
+				tabs.forEach((tab, i) => {
+					tab.classList.toggle('active', i === index)
+					contents[i].classList.toggle('active', i === index)
+				})
+			}
+		</script>
+	</body>
+</html>

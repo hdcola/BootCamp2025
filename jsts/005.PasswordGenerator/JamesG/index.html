@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>generate password</title>
+		<style>
+			.container {
+				background-color: rgba(255, 255, 255, 0.983);
+				border-color: rgb(238, 235, 235);
+				border-width: 1px;
+				border-style: solid;
+				border-radius: 20px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				/* 轻微阴影 */
+				margin: 100px;
+				padding: 30px;
+				width: 420px;
+				text-align: center;
+			}
+
+			.show {
+				border-width: 2px;
+				border-style: solid;
+				padding: 15px;
+				text-align: center;
+				white-space: pre-wrap;
+				word-break: break-all;
+			}
+			.content.activity {
+				border: solid;
+				border-width: 1px 0 0 0;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.content {
+				display: none;
+			}
+
+			.customize {
+				border: solid;
+				border-width: 0 0 1px 0;
+				display: flex;
+				flex-direction: row;
+				padding: 5px 0px 5px 20px;
+			}
+
+			.tabs {
+				display: flex;
+				flex-direction: row;
+				background-color: rgb(225, 223, 223);
+				padding: 5px 5px 5px 5px;
+			}
+
+			.tab {
+				flex: 1;
+				padding: 10px;
+				margin: 5px;
+				background-color: rgb(225, 223, 223);
+			}
+
+			.tab.active {
+				flex: 1;
+				padding: 10px;
+				margin: 5px;
+				background-color: rgb(253, 253, 253);
+			}
+
+			.button1 {
+				flex: 1;
+				padding: 10px;
+				margin: 5px;
+				background-color: rgba(235, 235, 235, 0.845);
+				border-radius: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p>choose password type</p>
+			<div class="tabs">
+				<div class="tab active" onclick="switchtab(0)">Random</div>
+				<div class="tab" onclick="switchtab(1)">Memorable</div>
+				<div class="tab" onclick="switchtab(2)">Pin</div>
+			</div>
+			<p>Customize your new password</p>
+			<div class="content activity">
+				<div class="customize">
+					<div>Characters</div>
+					<input
+						type="range"
+						id="slider1"
+						class="slider"
+						min="8"
+						max="100"
+						step="1"
+						value="20"
+						oninput="updateslider1(this.value)"
+					/>
+					<input
+						type="number"
+						id="box1"
+						min="8"
+						max="100"
+						value="20"
+						oninput="updatebox1(this.value)"
+					/>
+				</div>
+				<div class="customize">
+					<div>Numbers</div>
+					<input
+						switch
+						type="checkbox"
+						id="numbs"
+						onchange="updatePassLibrary()"
+					/>
+					<div>Symbols</div>
+					<input
+						switch
+						type="checkbox"
+						id="symbs"
+						onchange="updatePassLibrary()"
+					/>
+				</div>
+			</div>
+			<div class="content">
+				<div class="customize">
+					<div>Characters</div>
+					<input
+						type="range"
+						id="slider2"
+						class="slider"
+						min="3"
+						max="15"
+						step="1"
+						value="4"
+						oninput="updateslider2(this.value)"
+					/>
+					<input
+						type="number"
+						id="box2"
+						min="3"
+						max="15"
+						value="4"
+						oninput="updatebox2(this.value)"
+					/>
+				</div>
+				<div class="customize">
+					<div>Capitalize the first letter</div>
+					<input switch type="checkbox" />
+					<div>Use full words</div>
+					<input switch type="checkbox" />
+				</div>
+			</div>
+			<div class="content">
+				<div class="customize">
+					<div>Characters</div>
+					<input
+						type="range"
+						id="slider3"
+						class="slider"
+						min="3"
+						max="12"
+						step="1"
+						value="6"
+						oninput="updateslider3(this.value)"
+					/>
+					<input
+						type="number"
+						id="box3"
+						min="3"
+						max="12"
+						value="6"
+						oninput="updatebox3(this.value)"
+					/>
+				</div>
+			</div>
+			<p>Generated password</p>
+			<div class="show" id="showpass"></div>
+			<div class="buttons">
+				<input
+					type="button"
+					class="button1"
+					value="copy password"
+					onclick="navigator.clipboard.writeText(password0)"
+				/>
+				<input
+					type="button"
+					class="button1"
+					value="Refresh password"
+					onclick="showpass()"
+				/>
+			</div>
+		</div>
+		<div id="test1">test1</div>
+		<div id="test2">test2</div>
+		<div id="test3">test3</div>
+
+		<script>
+			let mode = 0
+			const letters =
+				'abcdefghijklmnopqrstuvwsxyzABCDEFGHIJKHIJKLMNOPQRSTUVWXYZ'
+			const numbers = '0123456789'
+			const symbs = '!@#$%^&*()_+-=[]{}<>?'
+			let passlibrary = letters
+			let password0 = ''
+			let result = ''
+
+			function getpassword() {
+				let calength = 0
+				password0 = ''
+				calength = document.getElementsByClassName('slider')[mode].value
+				document.getElementById('test1').innerHTML = calength
+				for (let i = calength; i > 0; i--) {
+					const str = passlibrary.charAt(
+						Math.floor(Math.random() * passlibrary.length)
+					)
+					password0 += str
+				}
+				document.getElementById('test2').innerHTML = password0
+			}
+
+			function showpass() {
+				getpassword()
+				result = ''
+				for (let char of password0) {
+					if (/[0-9]/.test(char)) {
+						result += `<span style="color:blue">${char}</span>`
+					} else if (/[a-zA-Z]/.test(char)) {
+						result += `<span style="color:black">${char}</span>`
+					} else {
+						result += `<span style="color:red">${char}</span>`
+					}
+				}
+				document.getElementById('showpass').innerHTML = result
+			}
+
+			function updatePassLibrary() {
+				const numbc = document.getElementById('numbs').checked
+				const symbc = document.getElementById('symbs').checked
+				passlibrary = ''
+				if (mode === 0) {
+					passlibrary = letters
+					if (numbc) {
+						passlibrary += numbers
+					}
+					if (symbc) {
+						passlibrary += symbs
+					}
+				}
+				if (mode === 2) {
+					passlibrary = numbers
+				}
+				showpass()
+			}
+
+			function updateslider1(x) {
+				document.getElementById('box1').value = x
+				showpass()
+			}
+
+			function updatebox1(x) {
+				document.getElementById('slider1').value = x
+				showpass()
+			}
+
+			function updateslider2(x) {
+				document.getElementById('box2').value = x
+			}
+
+			function updatebox2(x) {
+				document.getElementById('slider2').value = x
+			}
+
+			function updateslider3(x) {
+				document.getElementById('box3').value = x
+				showpass()
+			}
+
+			function updatebox3(x) {
+				document.getElementById('slider3').value = x
+				showpass()
+			}
+
+			function switchtab(x) {
+				const tabs = document.querySelectorAll('.tab')
+				const contents = document.querySelectorAll('.content')
+				mode = x
+				tabs.forEach((tab, i) => {
+					tab.classList.toggle('active', i === x)
+					contents[i].classList.toggle('activity', i === x)
+				})
+				document.getElementById('test3').innerHTML = mode
+				updatePassLibrary()
+			}
+
+			showpass()
+		</script>
+	</body>
+</html>
