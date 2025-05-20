@@ -219,16 +219,25 @@
 				}
 				const numbc = document.getElementById('numbs').checked
 				const symbc = document.getElementById('symbs').checked
+				const noLower = /^[^a-z]*$/.test(password0)
+				const noUpper = /^[^A-Z]*$/.test(password0)
+				const noNumber = /^[^0-9]*$/.test(password0)
+				const noSymbol = /^[a-zA-Z0-9]*$/.test(password0)
+				let times = 1
 				if (mode === 0) {
-					if (/^[^a-zA-Z]*$/.test(password0)) {
+					if (
+						noLower ||
+						noUpper ||
+						(numbc && noNumber) ||
+						(symbc && noSymbol)
+					) {
 						getpassword()
-					} else if (numbc && /^[^0-9]*$/.test(password0)) {
-						getpassword()
-					} else if (symbc && /^[a-zA-Z0-9]*$/.test(password0)) {
-						getpassword()
+						times += 1
 					}
 				}
 				document.getElementById('test2').innerHTML = password0
+				document.getElementById('test3').innerHTML =
+					'Generate times: ' + times
 			}
 
 			function showpass() {
@@ -301,7 +310,7 @@
 					tab.classList.toggle('active', i === x)
 					contents[i].classList.toggle('activity', i === x)
 				})
-				document.getElementById('test3').innerHTML = mode
+				// document.getElementById('test3').innerHTML = mode
 				updatePassLibrary()
 			}
 
