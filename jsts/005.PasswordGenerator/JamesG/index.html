@@ -217,6 +217,17 @@
 					)
 					password0 += str
 				}
+				const numbc = document.getElementById('numbs').checked
+				const symbc = document.getElementById('symbs').checked
+				if (mode === 0) {
+					if (/^[^a-zA-Z]*$/.test(password0)) {
+						getpassword()
+					} else if (numbc && /^[^0-9]*$/.test(password0)) {
+						getpassword()
+					} else if (symbc && /^[a-zA-Z0-9]*$/.test(password0)) {
+						getpassword()
+					}
+				}
 				document.getElementById('test2').innerHTML = password0
 			}
 
