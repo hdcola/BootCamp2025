@@ -106,6 +106,7 @@
 						oninput="updatebox1(this.value)"
 					/>
 				</div>
+				<!-- random 的两个按钮 ------------------------------------------------------------------------------------------------------>
 				<div class="customize">
 					<div>Numbers</div>
 					<input
@@ -145,11 +146,23 @@
 						oninput="updatebox2(this.value)"
 					/>
 				</div>
+				<!-- Memorable 的两个按钮 --------------------------------------------------------------------------------------------------------->
 				<div class="customize">
 					<div>Capitalize the first letter</div>
-					<input switch type="checkbox" />
+					<input
+						switch
+						type="checkbox"
+						id="Upperfirst"
+						onchange="updatePassLibrary()"
+					/>
 					<div>Use full words</div>
-					<input switch type="checkbox" />
+					<input
+						switch
+						type="checkbox"
+						id="fullword"
+						checked
+						onchange="updatePassLibrary()"
+					/>
 				</div>
 			</div>
 			<div class="content">
@@ -211,12 +224,40 @@
 				password0 = ''
 				calength = document.getElementsByClassName('slider')[mode].value
 				document.getElementById('test1').innerHTML = calength
-				for (let i = calength; i > 0; i--) {
-					const str = passlibrary.charAt(
-						Math.floor(Math.random() * passlibrary.length)
-					)
-					password0 += str
+				if (mode != 1) {
+					for (let i = calength; i > 0; i--) {
+						const str = passlibrary.charAt(
+							Math.floor(Math.random() * passlibrary.length)
+						)
+						password0 += str
+					}
 				}
+				if (mode === 1) {
+					const wordlength = Math.floor(Math.random() * 5) + 3
+					const capc = document.getElementById('Upperfirst').checked
+					const fulletter =
+						document.getElementById('fullword').checked
+					fetch(
+						`https://random-word-api.vercel.app/api?words=${calength}&length=${wordlength}`
+					)
+						.then((response) => response.json()) // 把响应转成 JSON
+						.then((data) => {
+							password0 = data
+								.map((word) => {
+									if (fulletter) return word
+									return word.length <= 4
+										? word
+										: word.slice(0, 4)
+								})
+								.join('-')
+							localStorage.setItem('a', password0)
+						})
+					password0 = localStorage.getItem('a')
+					password0 = capc
+						? password0.charAt(0).toUpperCase() + password0.slice(1)
+						: password0
+				}
+				document.getElementById('test2').innerHTML = password0
 				const numbc = document.getElementById('numbs').checked
 				const symbc = document.getElementById('symbs').checked
 				const noLower = /^[^a-z]*$/.test(password0)
@@ -235,9 +276,9 @@
 						times += 1
 					}
 				}
-				document.getElementById('test2').innerHTML = password0
-				document.getElementById('test3').innerHTML =
-					'Generate times: ' + times
+				// document.getElementById('test2').innerHTML = password0
+				// document.getElementById('test3').innerHTML =
+				// 	'Generate times: ' + times
 			}
 
 			function showpass() {
@@ -271,6 +312,9 @@
 				if (mode === 2) {
 					passlibrary = numbers
 				}
+				if (mode === 1) {
+					true
+				}
 				showpass()
 			}
 
@@ -286,10 +330,12 @@
 
 			function updateslider2(x) {
 				document.getElementById('box2').value = x
+				showpass()
 			}
 
 			function updatebox2(x) {
 				document.getElementById('slider2').value = x
+				showpass()
 			}
 
 			function updateslider3(x) {
@@ -310,7 +356,7 @@
 					tab.classList.toggle('active', i === x)
 					contents[i].classList.toggle('activity', i === x)
 				})
-				// document.getElementById('test3').innerHTML = mode
+				document.getElementById('test3').innerHTML = mode
 				updatePassLibrary()
 			}
 
