@@ -4,6 +4,17 @@
 		<meta charset="UTF-8" />
 		<title>generate password</title>
 		<style>
+			body,
+			html {
+				height: 100%;
+				margin: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #f8f8f8;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+
 			.container {
 				background-color: rgba(255, 255, 255, 0.983);
 				border-color: rgb(238, 235, 235);
@@ -15,7 +26,7 @@
 				margin: 100px;
 				padding: 30px;
 				width: 420px;
-				text-align: center;
+				/* text-align: center; */
 			}
 
 			.show {
@@ -25,7 +36,9 @@
 				text-align: center;
 				white-space: pre-wrap;
 				word-break: break-all;
+				border-radius: 10px;
 			}
+
 			.content.activity {
 				border: solid;
 				border-width: 1px 0 0 0;
@@ -50,6 +63,8 @@
 				flex-direction: row;
 				background-color: rgb(225, 223, 223);
 				padding: 5px 5px 5px 5px;
+				text-align: center;
+				border-radius: 8px;
 			}
 
 			.tab {
@@ -57,6 +72,7 @@
 				padding: 10px;
 				margin: 5px;
 				background-color: rgb(225, 223, 223);
+				border-radius: 5px;
 			}
 
 			.tab.active {
@@ -71,19 +87,33 @@
 				padding: 10px;
 				margin: 5px;
 				background-color: rgba(235, 235, 235, 0.845);
-				border-radius: 14px;
+				border-radius: 10px;
+			}
+
+			.buttons {
+				text-align: center;
+			}
+
+			.switch {
+				margin-left: 13px;
+				margin-right: 13px;
+			}
+
+			.box {
+				border-radius: 5px;
+				margin-left: 15px;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
-			<p>choose password type</p>
+			<p class="title">choose password type</p>
 			<div class="tabs">
 				<div class="tab active" onclick="switchtab(0)">Random</div>
 				<div class="tab" onclick="switchtab(1)">Memorable</div>
 				<div class="tab" onclick="switchtab(2)">Pin</div>
 			</div>
-			<p>Customize your new password</p>
+			<p class="title">Customize your new password</p>
 			<div class="content activity">
 				<div class="customize">
 					<div>Characters</div>
@@ -103,6 +133,7 @@
 						min="8"
 						max="100"
 						value="20"
+						class="box"
 						oninput="updatebox1(this.value)"
 					/>
 				</div>
@@ -113,6 +144,7 @@
 						switch
 						type="checkbox"
 						id="numbs"
+						class="switch"
 						onchange="updatePassLibrary()"
 					/>
 					<div>Symbols</div>
@@ -120,6 +152,7 @@
 						switch
 						type="checkbox"
 						id="symbs"
+						class="switch"
 						onchange="updatePassLibrary()"
 					/>
 				</div>
@@ -143,6 +176,7 @@
 						min="3"
 						max="15"
 						value="4"
+						class="box"
 						oninput="updatebox2(this.value)"
 					/>
 				</div>
@@ -153,6 +187,7 @@
 						switch
 						type="checkbox"
 						id="Upperfirst"
+						class="switch"
 						onchange="updatePassLibrary()"
 					/>
 					<div>Use full words</div>
@@ -160,6 +195,7 @@
 						switch
 						type="checkbox"
 						id="fullword"
+						class="switch"
 						checked
 						onchange="updatePassLibrary()"
 					/>
@@ -188,7 +224,7 @@
 					/>
 				</div>
 			</div>
-			<p>Generated password</p>
+			<p class="title">Generated password</p>
 			<div class="show" id="showpass"></div>
 			<div class="buttons">
 				<input
@@ -205,11 +241,19 @@
 				/>
 			</div>
 		</div>
-		<div id="test1">test1</div>
-		<div id="test2">test2</div>
-		<div id="test3">test3</div>
 
 		<script>
+			let wordsBank = []
+			;(async () => {
+				const leng = [3, 4, 5, 6, 7]
+				for (let i of leng) {
+					const res = await fetch(
+						`https://random-word-api.vercel.app/api?words=200&length=${i}`
+					)
+					const data = await res.json()
+					wordsBank.push(...data)
+				}
+			})()
 			let mode = 0
 			const letters =
 				'abcdefghijklmnopqrstuvwsxyzABCDEFGHIJKHIJKLMNOPQRSTUVWXYZ'
@@ -223,7 +267,6 @@
 				let calength = 0
 				password0 = ''
 				calength = document.getElementsByClassName('slider')[mode].value
-				document.getElementById('test1').innerHTML = calength
 				if (mode != 1) {
 					for (let i = calength; i > 0; i--) {
 						const str = passlibrary.charAt(
@@ -233,31 +276,28 @@
 					}
 				}
 				if (mode === 1) {
-					const wordlength = Math.floor(Math.random() * 5) + 3
 					const capc = document.getElementById('Upperfirst').checked
 					const fulletter =
 						document.getElementById('fullword').checked
-					fetch(
-						`https://random-word-api.vercel.app/api?words=${calength}&length=${wordlength}`
-					)
-						.then((response) => response.json()) // 把响应转成 JSON
-						.then((data) => {
-							password0 = data
-								.map((word) => {
-									if (fulletter) return word
-									return word.length <= 4
-										? word
-										: word.slice(0, 4)
-								})
-								.join('-')
-							localStorage.setItem('a', password0)
-						})
-					password0 = localStorage.getItem('a')
+					let words = []
+					for (let i = 0; i < calength; i++) {
+						const word0 =
+							wordsBank[
+								Math.floor(Math.random() * wordsBank.length)
+							]
+						const pp = fulletter
+							? word0
+							: word0.length <= 4
+							? word0
+							: word0.slice(0, 4)
+						words.push(pp)
+					}
+
+					password0 = words.join('-')
 					password0 = capc
 						? password0.charAt(0).toUpperCase() + password0.slice(1)
 						: password0
 				}
-				document.getElementById('test2').innerHTML = password0
 				const numbc = document.getElementById('numbs').checked
 				const symbc = document.getElementById('symbs').checked
 				const noLower = /^[^a-z]*$/.test(password0)
@@ -356,7 +396,6 @@
 					tab.classList.toggle('active', i === x)
 					contents[i].classList.toggle('activity', i === x)
 				})
-				document.getElementById('test3').innerHTML = mode
 				updatePassLibrary()
 			}
 
