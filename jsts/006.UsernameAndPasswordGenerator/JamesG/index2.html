@@ -30,71 +30,68 @@
 			.customize {
 				border: solid;
 				border-width: 0 0 1px 0;
-				display: flex;
-				flex-direction: row;
 				padding: 5px 0px 5px 20px;
 			}
 
 			.tabs {
-				display: flex;
-				flex-direction: row;
 				background-color: rgb(225, 223, 223);
-				padding: 5px 5px 5px 5px;
-				text-align: center;
-				border-radius: 8px;
 			}
 
 			.tab {
-				flex: 1;
-				padding: 10px;
-				margin: 5px;
 				background-color: rgb(225, 223, 223);
-				border-radius: 5px;
 			}
 
 			.tab.active {
-				flex: 1;
-				padding: 10px;
-				margin: 5px;
 				background-color: rgb(253, 253, 253);
 			}
-
-			/*
-
-			.switch {
-				margin-left: 13px;
-				margin-right: 13px;
-			}
-
-			.box {
-				border-radius: 5px;
-				margin-left: 15px;
-			} */
 		</style>
 	</head>
 	<body>
 		<div class="row text-center border m-2 p-2">
 			<div class="col-sm-12 col-md-5">
-				<p>打南边来了个喇嘛,手里提着五斤鳎蟆</p>
+				<input
+					type="button"
+					class="button1 rounded-3 my-1 py-2 flex-fill"
+					value="Go Genetate Username"
+					onclick="window.location.href='index.html'"
+				/>
+				<h2>打南边来了个喇嘛,手里提着五斤鳎蟆</h2>
 				<p>吃葡萄不吐葡萄皮,不吃葡萄倒吐葡萄皮</p>
 			</div>
 			<div
 				class="col-sm-12 col-md-7 border border-2 rounded-3 p-4 shadow"
 			>
 				<p class="text-start">choose password type</p>
-				<div class="tabs">
-					<div class="tab active" onclick="switchtab(0)">Random</div>
-					<div class="tab" onclick="switchtab(1)">Memorable</div>
-					<div class="tab" onclick="switchtab(2)">Pin</div>
+				<div
+					class="tabs justify-content-evenly rounded-3 p-1 m-1 d-flex"
+				>
+					<div
+						class="tab active rounded-2 p-2 m-1 flex-fill"
+						onclick="switchtab(0)"
+					>
+						Random
+					</div>
+					<div
+						class="tab rounded-2 p-2 m-1 flex-fill"
+						onclick="switchtab(1)"
+					>
+						Memorable
+					</div>
+					<div
+						class="tab rounded-2 p-2 m-1 flex-fill"
+						onclick="switchtab(2)"
+					>
+						Pin
+					</div>
 				</div>
 				<p class="text-start">Customize your new password</p>
 				<div class="content activity">
-					<div class="customize">
-						<div>Characters</div>
+					<div class="customize d-flex flex-row">
+						<div class="align-text-middle">Characters</div>
 						<input
 							type="range"
 							id="slider1"
-							class="slider"
+							class="slider m-2"
 							min="8"
 							max="100"
 							step="1"
@@ -107,18 +104,20 @@
 							min="8"
 							max="100"
 							value="20"
-							class="box"
+							class="box rounded-1 m-2"
 							oninput="getvalues(this.value)"
 						/>
 					</div>
 					<!-- random 的两个按钮 ------------------------------------------------------------------------------------------------------>
-					<div class="customize">
+					<div
+						class="customize form-check form-switch d-flex flex-row"
+					>
 						<div>Numbers</div>
 						<input
 							switch
 							type="checkbox"
 							id="numbs"
-							class="switch"
+							class="switch form-check-input m-2"
 							checked
 							onchange="getchecks()"
 						/>
@@ -127,18 +126,20 @@
 							switch
 							type="checkbox"
 							id="symbs"
-							class="switch"
+							class="switch form-check-input m-2"
 							onchange="getchecks()"
 						/>
 					</div>
 				</div>
 				<div class="content">
-					<div class="customize">
-						<div>Characters</div>
+					<div
+						class="customize form-check form-switch d-flex flex-row"
+					>
+						<div class="align-text-middle">Characters</div>
 						<input
 							type="range"
 							id="slider2"
-							class="slider"
+							class="slider m-2"
 							min="3"
 							max="15"
 							step="1"
@@ -151,18 +152,20 @@
 							min="3"
 							max="15"
 							value="4"
-							class="box"
+							class="box rounded-1 m-2"
 							oninput="getvalues(this.value)"
 						/>
 					</div>
 					<!-- Memorable 的两个按钮 --------------------------------------------------------------------------------------------------------->
-					<div class="customize">
+					<div
+						class="customize form-check form-switch d-flex flex-row"
+					>
 						<div>Capitalize the first letter</div>
 						<input
 							switch
 							type="checkbox"
 							id="Upperfirst"
-							class="switch"
+							class="switch form-check-input m-2"
 							onchange="getchecks()"
 						/>
 						<div>Use full words</div>
@@ -170,19 +173,21 @@
 							switch
 							type="checkbox"
 							id="fullword"
-							class="switch"
+							class="switch form-check-input m-2"
 							checked
 							onchange="getchecks()"
 						/>
 					</div>
 				</div>
 				<div class="content">
-					<div class="customize">
-						<div>Characters</div>
+					<div
+						class="customize form-check form-switch d-flex flex-row"
+					>
+						<div class="align-text-middle">Characters</div>
 						<input
 							type="range"
 							id="slider3"
-							class="slider"
+							class="slider m-2"
 							min="3"
 							max="12"
 							step="1"
@@ -195,7 +200,7 @@
 							min="3"
 							max="12"
 							value="6"
-							class="box"
+							class="box rounded-1 m-2"
 							oninput="getvalues(this.value)"
 						/>
 					</div>
@@ -205,18 +210,18 @@
 					class="show border border-2 rounded-3 p-3 my-1 text-center"
 					id="showpass"
 				></div>
-				<div class="buttons d-md-flex justify-content-between">
+				<div class="buttons">
 					<input
-						type="button"
-						class="button1 rounded-3 my-1 p-2 bg-primary text-light col-sm-12 col-md-6"
+						type="button d-flex flex-row"
+						class="button1 text-center rounded-3 my-1 py-2 bg-primary text-light col-sm-12 col-md-6 col-xs-12 flex-fill"
 						value="copy password"
 						onclick="navigator.clipboard.writeText(password0)"
 					/>
 					<input
 						type="button"
-						class="button1 rounded-3 my-1 p-2 col-sm-12 col-md-6"
+						class="button1 rounded-3 my-1 py-2 col-sm-12 col-md-5 col-xs-12 flex-fill"
 						value="Refresh password"
-						onclick="showpass()"
+						onclick="updataUI()"
 					/>
 				</div>
 			</div>
