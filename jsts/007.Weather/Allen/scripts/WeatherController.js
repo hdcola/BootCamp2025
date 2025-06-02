@@ -1,7 +1,7 @@
 import { WeatherModel } from "./WeatherModel.js";
 import { WeatherView } from "./WeatherView.js";
 
-class WeatherController {
+export class WeatherController {
   constructor() {
     this.model = new WeatherModel();
     this.view = new WeatherView();
@@ -20,54 +20,43 @@ class WeatherController {
 
   async update(lat, lon) {
     const data = await this.model.getWeatherByLanAndLon(lat, lon);
-    this.cityEl.textContent = data.name;
-    this.tempEl.textContent = `${Math.round(data.main.temp)}°`;
-    this.feelsLikeEl.textContent = `体感温度: ${Math.round(
-      data.main.feels_like
-    )}°`;
-    this.highestEl.textContent = `最高: ${Math.round(data.main.temp_max)}°`;
-    this.lowestEl.textContent = `最低: ${Math.round(data.main.temp_min)}°`;
+    this.view.updateMainWeatherPanel({
+      city: data.name,
+      temp: data.main.temp,
+      feelsLike: data.main.feels_like,
+      tempMax: data.main.temp_max,
+      tempMin: data.main.temp_min,
+    });
     this.view.updateIconElement(this.iconEl, data.weather[0].main);
   }
 
-  clearSuggestions() {
-    const container = document.querySelector("#searchSuggestions");
-    container.innerHTML = "";
-  }
-
-  showSuggestions(cities) {
-    const container = document.querySelector("#searchSuggestions");
-    container.innerHTML = "";
-
-    cities.forEach((city) => {
-      const item = document.createElement("button");
-      item.className = "list-group-item list-group-item-action";
-      item.textContent = `${city.name}, ${city.state || ""} ${city.country}`;
-      item.addEventListener("click", () => {
-        this.searchInput.value = city.name;
-        this.clearSuggestions();
-        this.update(city.lat, city.lon);
-      });
-      container.appendChild(item);
-    });
-  }
-
-  init() {
+  async init() {
     this.searchInput.addEventListener("input", async () => {
       const query = this.searchInput.value.trim();
-      if (query.length < 2) return this.clearSuggestions();
+      if (query.length < 2) return this.view.clearSuggestions();
 
       try {
-        const results = await this.model.getLatAndLonByCity(query); // 你需要写这个函数
-        this.showSuggestions(results);
+        const results = await this.model.getLatAndLonByCity(query);
+        this.view.showSuggestions(results, async (city) => {
+          this.searchInput.value = city.name;
+          this.view.clearSuggestions();
+          await this.update(city.lat, city.lon);
+        });
       } catch (err) {
         console.error("Error getting city suggestions", err);
       }
     });
 
-    this.update("45.437480528412046", "-73.83902492132476");
+    const loc = await this.model.getCurrentLocation();
+    if (loc) {
+      this.update(loc.lat, loc.lon);
+    } else {
+      console.error("Unable to get current location");
+      // Default to Toronto if location is not available
+      this.update(43.7, -79.42); // Toronto coordinates
+    }
   }
 }
 
 const controller = new WeatherController();
-controller.init();
+await controller.init();
