@@ -10,13 +10,20 @@
 			crossorigin="anonymous"
 		/>
 		<title>weather</title>
+
+		<style>
+			body {
+				background-color: rgba(79, 173, 240, 0.4);
+			}
+		</style>
 	</head>
 	<body>
 		<div class="d-flex flex-column text-center">
-			<p>location</p>
-			<h1>10度</h1>
-			<h3>最高13度,最低7度</h3>
-			<p>体感温度: 1度</p>
+			<p id="location">location</p>
+			<h1 id="temperture">10度</h1>
+			<h3 id="range">最高13度,最低7度</h3>
+			<p id="feeling">体感温度: 1度</p>
+			<p id="weathertype">多云</p>
 		</div>
 		<div class="text-center d-flex flex-row">
 			<div>
@@ -86,4 +93,10 @@
 			</div>
 		</div>
 	</body>
+	<script src="./js/script.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+		crossorigin="anonymous"
+	></script>
 </html>
