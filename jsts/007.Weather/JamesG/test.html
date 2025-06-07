@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<title>天气应用</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<!-- 搜索栏 -->
+			<input type="text" id="searchCity" placeholder="搜索城市..." />
+
+			<!-- 当前天气 -->
+			<div id="current-weather">
+				<h1 id="city-name">Montreal</h1>
+				<div id="temperature">12°C</div>
+				<div id="weather-description">多云</div>
+			</div>
+
+			<!-- 小时预报 -->
+			<div id="hourly-forecast">1h</div>
+
+			<!-- 10天预报 -->
+			<div id="daily-forecast">10</div>
+		</div>
+
+		<script src="main.js"></script>
+	</body>
+</html>
