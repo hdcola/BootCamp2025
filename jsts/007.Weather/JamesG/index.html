@@ -18,82 +18,89 @@
 		</style>
 	</head>
 	<body>
-		<div class="d-flex flex-column text-center">
+		<div
+			class="d-flex flex-column text-center justify-content-center align-items-center"
+		>
 			<p id="location">location</p>
 			<h1 id="temperture">10度</h1>
 			<h3 id="range">最高13度,最低7度</h3>
 			<p id="feeling">体感温度: 1度</p>
-			<p id="weathertype">多云</p>
+			<div class="d-flex flex-row text-center">
+				<p id="weathertype">多云</p>
+				<img id="weather-icon" alt="天气图标" />
+			</div>
 		</div>
-		<div class="text-center d-flex flex-row">
-			<div>
-				<div>现在</div>
-				<div>icon</div>
-				<div>11度</div>
+		<div
+			class="text-center d-flex flex-row justify-content-center border border-2 rounded-3"
+		>
+			<div class="mx-2">
+				<div id="n0time">现在</div>
+				<div id="n0icon">icon</div>
+				<div id="n0temp">11度</div>
 			</div>
 			<div>
-				<div>+1h</div>
-				<div>icon</div>
-				<div>11度</div>
+				<div id="n1time">+1h</div>
+				<div id="n1icon">icon</div>
+				<div id="n1temp">11度</div>
 			</div>
-			<div>
-				<div>+2h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n2time">+2h</div>
+				<div id="n2icon">icon</div>
+				<div id="n2temp">11度</div>
 			</div>
-			<div>
-				<div>+3h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n3time">+3h</div>
+				<div id="n3icon">icon</div>
+				<div id="n3temp">11度</div>
 			</div>
-			<div>
-				<div>+4h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n4time">+4h</div>
+				<div id="n4icon">icon</div>
+				<div id="n4temp">11度</div>
 			</div>
-			<div>
-				<div>+5h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n5time">+5h</div>
+				<div id="n5icon">icon</div>
+				<div id="n5temp">11度</div>
 			</div>
-			<div>
-				<div>+6h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n6time">+6h</div>
+				<div id="n6icon">icon</div>
+				<div id="n6temp">11度</div>
 			</div>
-			<div>
-				<div>+7h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n7time">+6h</div>
+				<div id="n7icon">icon</div>
+				<div id="n7temp">11度</div>
 			</div>
-			<div>
-				<div>+8h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n8time">+6h</div>
+				<div id="n8icon">icon</div>
+				<div id="n8temp">11度</div>
 			</div>
-			<div>
-				<div>+9h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n9time">+6h</div>
+				<div id="n9icon">icon</div>
+				<div id="n9temp">11度</div>
 			</div>
-			<div>
-				<div>+10h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n10time">+6h</div>
+				<div id="n10icon">icon</div>
+				<div id="n10temp">11度</div>
 			</div>
-			<div>
-				<div>+11h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n11time">+6h</div>
+				<div id="n11icon">icon</div>
+				<div id="n11temp">11度</div>
 			</div>
-			<div>
-				<div>+12h</div>
-				<div>icon</div>
-				<div>11度</div>
+			<div class="mx-2">
+				<div id="n12time">+6h</div>
+				<div id="n12icon">icon</div>
+				<div id="n12temp">11度</div>
 			</div>
 		</div>
 	</body>
-	<script>
+	<!-- <script>
 		async function fetchWeather() {
 			try {
 				const response = await fetch(
@@ -101,8 +108,13 @@
 				) // 替换成你自己的API
 				const data = await response.json()
 
+				const response1 = await fetch(
+					'https://api.openweathermap.org/data/3.0/onecall?lat=43.852&lon=-79.484&exclude=minutely&lang=zh_cn&appid=a93c146c4d6357ebf52d9d6b51416517'
+				) // 替换成你自己的API
+				const data1 = await response.json()
+
 				// 温度单位是开尔文，转换成摄氏度
-				const tempC = (data.main.temp - 273.15).toFixed(1)
+				const tempC = (data.main.temp - 274.15).toFixed(1)
 				const feelsC = (data.main.feels_like - 273.15).toFixed(1)
 				const maxC = (data.main.temp_max - 273.15).toFixed(1)
 				const minC = (data.main.temp_min - 273.15).toFixed(1)
@@ -126,8 +138,8 @@
 
 		// 每5分钟自动刷新
 		setInterval(fetchWeather, 300000) // 300000ms = 5分钟
-	</script>
-	<!-- <script src="./js/script.js"></script> -->
+	</script> -->
+	<script src="./js/script.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
