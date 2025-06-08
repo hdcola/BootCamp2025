@@ -63,4 +63,4 @@ async function fetchWeather() {
 fetchWeather()
 
 // 每5分钟自动刷新
-setInterval(fetchWeather, 300000) // 300000ms = 5分钟
+// setInterval(fetchWeather, 300000) // 300000ms = 5分钟
