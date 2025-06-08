@@ -1,0 +1,17 @@
+@font-face {
+    font-family:"Material Symbols Outlined";
+    font-style: normal;
+    font-weight: 100 700;
+    src: url(https://fonts.googleapis.com/icon?family=Material+Icons);
+}
+
+.vertical-icon-bar {
+    background-color: #555;
+    width: 4em;
+}
+
+.horizontal-icon-bar {
+    background-color: #555;
+    height: 4em;
+    display: flex;
+}
