@@ -52,7 +52,7 @@ function currentWeather() {
 		locdata[0]?.name + ', ' + locdata[0]?.country
 	document.getElementById('temperture').textContent = tempC + '°'
 	document.getElementById('range').textContent =
-		'最高 ' + maxC + '°, 最低 ' + minC + '°'
+		'最低 ' + minC + '°, 最高 ' + maxC + '°'
 	document.getElementById('feeling').textContent = '体感温度: ' + feelsC + '°'
 	document.getElementById('weathertype').textContent = weatype
 }
@@ -90,7 +90,7 @@ function getChineseWeekday(dateObj) {
 }
 
 function dailyForecastWeather() {
-	for (let i = 0; i < 11; i++) {
+	for (let i = 0; i < 10; i++) {
 		//生成日期
 		const days = new Date(data.daily[i].dt * 1000)
 		if (i === 0) {
