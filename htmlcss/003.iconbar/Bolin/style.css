@@ -15,3 +15,10 @@
     height: 4em;
     display: flex;
 }
+
+.horizontal-icon-bar a,
+.vertical-icon-bar a {
+    display: block;
+    color: white;
+    padding: 1em;
+}
