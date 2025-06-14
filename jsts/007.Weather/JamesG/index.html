@@ -15,9 +15,32 @@
 			body {
 				background-color: rgba(79, 173, 240, 0.4);
 			}
+
+			#suggestions {
+				/* 下拉面板 */
+				position: absolute;
+				z-index: 1000;
+				width: 100%;
+				max-height: 240px;
+				overflow-y: auto;
+			}
+			#suggestions .list-group-item {
+				cursor: pointer;
+			}
 		</style>
 	</head>
 	<body>
+		<div class="position-relative col-lg-3 col-md-4 col-sm-6">
+			<input
+				id="cityInput"
+				type="text"
+				class="form-control"
+				placeholder="输入城市名…"
+				autocomplete="off"
+			/>
+			<ul id="suggestions" class="list-group shadow d-none"></ul>
+		</div>
+
 		<div
 			class="d-flex flex-column text-center justify-content-center align-items-center"
 		>
@@ -30,6 +53,7 @@
 				<img id="weather-icon" alt="天气图标" />
 			</div>
 		</div>
+
 		<div id="lotsofmodules" class="container-fluid d-flex flex-wrap">
 			<div class="overflow-auto border border-2 rounded-3 m-2">
 				<p>未来24小时天气预报</p>
@@ -228,6 +252,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="col-6 col-lg-2 col-md-3 d-flex flex-row">
 				<div
 					class="ratio ratio-1x1 border border-2 m-2 rounded-3 d-flex flex-column align-items-center justify-content-center"
@@ -241,6 +266,66 @@
 						>
 							5 中等
 						</p>
+						<p class="m-2">高于3时注意防晒</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-6 col-lg-2 col-md-3 d-flex flex-row">
+				<div
+					class="ratio ratio-1x1 border border-2 m-2 rounded-3 d-flex flex-column align-items-center justify-content-center"
+				>
+					<div>
+						<p class="m-2">湿度</p>
+						<p
+							id="humidity"
+							class="m-2"
+							style="font-size: xx-large"
+						>
+							10%
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-6 col-lg-4 col-md-6">
+				<div
+					class="border border-2 m-2 rounded-3 d-flex flex-column align-items-round justify-content-round"
+				>
+					<div>
+						<p class="m-2">风</p>
+						<div class="d-flex flex-row">
+							<p class="m-2">风速</p>
+							<p
+								id="wind-speed"
+								class="m-2"
+								style="font-size: large"
+							>
+								5 km/h
+							</p>
+						</div>
+
+						<div class="d-flex flex-row">
+							<p class="m-2">阵风速</p>
+							<p
+								id="wind-gust"
+								class="m-2"
+								style="font-size: large"
+							>
+								50 km/h
+							</p>
+						</div>
+
+						<div class="d-flex flex-row">
+							<p class="m-2">风向</p>
+							<p
+								id="wind-direction"
+								class="m-2"
+								style="font-size: large"
+							>
+								东南风
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
