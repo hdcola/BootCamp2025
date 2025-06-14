@@ -73,8 +73,15 @@ function hourlyForecastWeather() {
 	document.getElementById('n0temp').textContent = tempC + '°'
 
 	for (let i = 1; i < 25; i++) {
-		document.getElementById(`n${i}temp`).textContent =
-			data.hourly[i].temp.toFixed(0) + '°'
+		const iconCode1 = data.hourly[i].weather[0].icon
+		document.getElementById(`hourly-forecast`).innerHTML += `
+			<div class="mx-2">
+				<div id="n${i}time">Date(data.hourly[${i}].dt * 1000</div>
+				<img id="n${i}icon" />
+				<div id="n${i}temp">${data.hourly[i].temp.toFixed(0)}°</div>
+			</div>
+		`
+		matchIconandId(iconCode1, `n${i}icon`)
 	}
 	for (let i = 1; i < 25; i++) {
 		const hours = new Date(data.hourly[i].dt * 1000)
