@@ -2,7 +2,8 @@
     font-family:"Material Symbols Outlined";
     font-style: normal;
     font-weight: 100 700;
-    src: url(https://fonts.googleapis.com/icon?family=Material+Icons);
+    src: url("https://fonts.gstatic.com/s/materialsymbolsoutlined/v100/kJZQ4y8c3a1b2d5e7f6f4c5e5e5e5e5e5e5e5e5e5e5e5.woff2") format("woff2");
+   
 }
 
 .vertical-icon-bar {
@@ -22,3 +23,43 @@
     color: white;
     padding: 1em;
 }
+
+i [class^="material-symbols-"]:before {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    vertical-align: middle;
+    line-height: 1em;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #000;
+}
+
+.active {
+    background-color: #04aa6d;
+}
+
+.icon-home::before {
+    content: "\e88a";
+}
+
+.icon-search::before {
+    content: "search";
+}
+
+.icon-message::before {
+    content: "message";
+}
+
+.icon-globe::before {
+    content: "globe";
+}
+
