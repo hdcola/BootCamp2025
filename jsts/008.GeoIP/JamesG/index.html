@@ -19,13 +19,15 @@
 			let locationData = {}
 			let data = {}
 			let ipData = {}
+			let googlemapAPI = 'YOUR_GOOGLE_MAPS_API_KEY' // 替换为你的Google Maps API密钥
+			let ip2locationAPI = 'CC867026D6DE0AE1BE2A0F38A3F4F45E' // 替换为你的IP2Location API密钥
 
 			// 使用fetch获取用户IP地址和位置
 			async function getUserIP() {
 				const response = await fetch('https://api.my-ip.io/v2/ip.json')
 				data = await response.json()
 				const location = await fetch(
-					`https://api.ip2location.io/?key=CC867026D6DE0AE1BE2A0F38A3F4F45E&ip=${data.ip}`
+					`https://api.ip2location.io/?key=${ip2locationAPI}&ip=${data.ip}`
 				)
 				locationData = await location.json()
 				console.log(locationData)
@@ -34,7 +36,7 @@
 			//通过IP地址获取位置并在地图上显示
 			async function getLocationByIP(ip) {
 				const response = await fetch(
-					`https://api.ip2location.io/?key=CC867026D6DE0AE1BE2A0F38A3F4F45E&ip=${ip}`
+					`https://api.ip2location.io/?key=${ip2locationAPI}&ip=${ip}`
 				)
 				locationData = await response.json()
 				console.log(locationData)
@@ -85,6 +87,6 @@
 					myMap()
 				})
 		</script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArUdZmSIUpx7SuV_w36_JC_2FKr-vnBAc&callback=myMap"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=${googlemapAPI}&callback=myMap"></script>
 	</body>
 </html>
