@@ -4,7 +4,7 @@
 //全局变量区--持续更新中
 let data
 let locdata
-const apiKey = 'a93c146c4d6357ebf52d9d6b51416517'
+const apiKey = YOUR - API - KEY
 
 //调用天气API+程序启动部分
 async function fetchWeather(lat1 = 43.852, lon1 = -79.484) {
