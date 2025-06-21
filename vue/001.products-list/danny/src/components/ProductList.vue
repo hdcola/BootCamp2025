@@ -11,38 +11,33 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
 import ProductItem from './ProductItem.vue';
 
-export default {
-    name: 'ProductList',
-    components: {
-        ProductItem
+const props = defineProps({
+    products: {
+        type: Array,
+        required: true
     },
-    props: {
-        products: {
-            type: Array,
-            required: true
-        },
-        filterText: {
-            type: String,
-            default: ''
-        }
-    },
-    computed: {
-        filteredProducts() {
-            if (!this.filterText) {
-                return this.products;
-            }
+    filterText: {
+        type: String,
+        default: ''
+    }
+});
 
-            const searchTerm = this.filterText.toLowerCase();
-            return this.products.filter(product =>
-                product.name.toLowerCase().includes(searchTerm)
-            );
-        }
-    },
-    emits: ['delete-product']
-}
+defineEmits(['delete-product']);
+
+const filteredProducts = computed(() => {
+    if (!props.filterText) {
+        return props.products;
+    }
+
+    const searchTerm = props.filterText.toLowerCase();
+    return props.products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm)
+    );
+});
 </script>
 
 <style scoped>

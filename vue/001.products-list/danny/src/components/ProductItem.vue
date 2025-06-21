@@ -12,21 +12,19 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'ProductItem',
-    props: {
-        product: {
-            type: Object,
-            required: true
-        }
-    },
-    methods: {
-        formatPrice(price) {
-            return price.toFixed(2);
-        }
+<script setup>
+defineProps({
+    product: {
+        type: Object,
+        required: true
     }
-}
+});
+
+defineEmits(['delete-product']);
+
+const formatPrice = (price) => {
+    return price.toFixed(2);
+};
 </script>
 
 <style scoped>

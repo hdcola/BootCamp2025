@@ -19,39 +19,28 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import ProductAddForm from './components/ProductAddForm.vue';
 import ProductFilter from './components/ProductFilter.vue';
 import ProductList from './components/ProductList.vue';
 
-export default {
-  name: 'App',
-  components: {
-    ProductAddForm,
-    ProductFilter,
-    ProductList
-  },
-  data() {
-    return {
-      products: [
-        { id: 1, name: 'Laptop', price: 1299.99 },
-        { id: 2, name: 'Smartphone', price: 699.99 },
-        { id: 3, name: 'Headphones', price: 149.99 },
-        { id: 4, name: 'Tablet', price: 499.99 }
-      ],
-      filterText: ''
-    }
-  },
-  methods: {
-    addProduct(product) {
-      this.products.push(product);
-    },
+const products = ref([
+  { id: 1, name: 'Laptop', price: 1299.99 },
+  { id: 2, name: 'Smartphone', price: 699.99 },
+  { id: 3, name: 'Headphones', price: 149.99 },
+  { id: 4, name: 'Tablet', price: 499.99 }
+]);
 
-    deleteProduct(productId) {
-      this.products = this.products.filter(product => product.id !== productId);
-    }
-  }
-}
+const filterText = ref('');
+
+const addProduct = (product) => {
+  products.value.push(product);
+};
+
+const deleteProduct = (productId) => {
+  products.value = products.value.filter(product => product.id !== productId);
+};
 </script>
 
 <style>

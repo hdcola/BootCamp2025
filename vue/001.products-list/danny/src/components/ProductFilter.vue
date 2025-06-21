@@ -13,21 +13,19 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'ProductFilter',
-    props: {
-        filterText: {
-            type: String,
-            default: ''
-        }
-    },
-    methods: {
-        updateFilter(value) {
-            this.$emit('update:filterText', value);
-        }
+<script setup>
+defineProps({
+    filterText: {
+        type: String,
+        default: ''
     }
-}
+});
+
+const emit = defineEmits(['update:filterText']);
+
+const updateFilter = (value) => {
+    emit('update:filterText', value);
+};
 </script>
 
 <style scoped>
