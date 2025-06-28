@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ProductItem v-for="aaa in products3" :key="aaa.id" :name="aaa.name" :price="aaa.price" @delete="$emit('delete2',aaa.name)">
+        <ProductItem v-for="aaa in productsList" :key="aaa.id" :name="aaa.name" :price="aaa.price" @delete="$emit('delete2',aaa.name)">
         </ProductItem>
     </div>
 </template>
@@ -10,7 +10,7 @@ import ProductItem from './ProductItem.vue'
 
 
 const props = defineProps({
-  products3:{
+  productsList:{
         type: Object,
         required: true
     },
