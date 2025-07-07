@@ -23,7 +23,7 @@ const products2 = ref([
 <template>
 
     <div class="row">
-        <ProductList :products3="products2"
+        <ProductList :productsList="products2"
         @delete2="deleteProduct1">
             
         </ProductList>
