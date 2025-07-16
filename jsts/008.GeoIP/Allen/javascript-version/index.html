@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Huninn&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .huninn-regular {
+        font-family: "Huninn", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
+    <title>Ip Address</title>
+  </head>
+  <body>
+    <div class="flex h-dvh w-screen">
+      <div class="h-full w-full bg-blue-100 hidden md:flex flex-col items-center justify-center">
+        <span class="huninn-regular text-2xl tracking-widest" style="writing-mode: vertical-rl; text-orientation: mixed;">
+          广告位招租
+        </span>
+      </div>
+      <div class="flex w-full flex-col gap-6 h-dvh p-10">
+        <div
+          class="huninn-regular mx-auto font-bold md:text-5xl text-4xl text-primary"
+        >
+          我在哪？ 他在哪？
+        </div>
+
+        <div class="bg-blue-100 md:hidden block text-center huninn-regular">广告位招租</div>
+
+        <div class="mx-auto">
+          <input
+            type="text"
+            id="ipaddress"
+            placeholder="Input IP Address"
+            class="input input-primary huninn-regular"
+          />
+        </div>
+
+        <div id="mobileAds" class="flex flex-col md:hidden block"></div>
+        <script>
+          const colors = [
+            'red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'violet'
+          ];
+          const mobileAds = document.getElementById('mobileAds');
+          colors.forEach(color => {
+            const div = document.createElement('div');
+            div.className = `bg-${color}-100 text-center huninn-regular`;
+            div.textContent = '广告位招租';
+            mobileAds.appendChild(div);
+          });
+        </script>
+
+        <div
+          class="mockup-window border border-base-300 max-w-full h-full md:min-w-5xl md:min-h-5xl md:mx-auto"
+        >
+          <div
+            id="googleMap"
+            class="grid place-content-center border-t border-base-300 h-full huninn-regular"
+          >
+            Google map
+          </div>
+        </div>
+      </div>
+       <div class="h-full w-full bg-blue-100 hidden md:flex flex-col items-center justify-center">
+        <span class="huninn-regular text-2xl tracking-widest" style="writing-mode: vertical-rl; text-orientation: mixed;">
+          广告位招租
+        </span>
+      </div>
+    </div>
+
+    <script type="module" src="./scripts/controller.js"></script>
+  </body>
+</html>

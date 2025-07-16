@@ -1,0 +1,29 @@
+
+
+
+.module {
+    margin: 20px;
+    width: 90%;
+}
+
+
+.module-title {
+    background-color: rgb(176, 174, 174) ;
+    padding: 0.5em;
+    border: 0.5px rgb(141, 139, 139);
+    margin: 0;
+}
+
+.module-content {
+    padding: 8px 8px 32px 8px;
+    border-width: medium 0.5px 0.5px;
+    border-style: none solid solid;
+    border-color: currentcolor rgb(141, 139, 139) rgb(141, 139, 139);
+    border-image: none;
+    margin: 0;
+}
+
+.module-content-text {
+    padding-left: 0.5em;
+}
+
