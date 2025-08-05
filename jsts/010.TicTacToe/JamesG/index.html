@@ -18,81 +18,84 @@
 				width: 90vmin; /* 宽度为视口最小边的90% */
 				height: 90vmin;
 				border: 2px solid #000000;
-
-				/* margin: 20px; */
 			}
 			.cell {
-				/* width: 60px; */
-				/* height: 100px; */
 				font-size: 19vmin;
 				display: flex;
 				justify-content: center; /* 水平居中 */
 				align-items: center; /* 垂直居中 */
+				/* cursor: pointer; */
+			}
+
+			.cell:hover {
+				background-color: rgba(198, 194, 194, 0.693);
 				cursor: pointer;
 			}
-			/* .X {
-				color: rgb(0, 0, 0);
-			}
-			.O {
-				color: rgb(0, 0, 0);
-			} */
 		</style>
 	</head>
 
 	<body>
+		<!-- Task 0 的内容,静态棋盘 只有html的内容和CSS的内容-->
 		<div
 			class="d-flex justify-content-center align-items-center min-vh-100"
 		>
 			<div class="d-flex flex-column align-items-center">
 				<!-- 棋盘 -->
 				<div class="board border border-1 border-black" id="board">
-					<div class="cell border border-2" id="1"></div>
-					<div class="cell border border-2" id="2"></div>
-					<div class="cell border border-2" id="3"></div>
-					<div class="cell border border-2" id="4"></div>
-					<div class="cell border border-2" id="5"></div>
-					<div class="cell border border-2" id="6"></div>
-					<div class="cell border border-2" id="7"></div>
-					<div class="cell border border-2" id="8"></div>
-					<div class="cell border border-2" id="9"></div>
+					<div
+						class="cell border border-2"
+						id="1"
+						data-index="1"
+					></div>
+					<div
+						class="cell border border-2"
+						id="2"
+						data-index="2"
+					></div>
+					<div
+						class="cell border border-2"
+						id="3"
+						data-index="3"
+					></div>
+					<div
+						class="cell border border-2"
+						id="4"
+						data-index="4"
+					></div>
+					<div
+						class="cell border border-2"
+						id="5"
+						data-index="5"
+					></div>
+					<div
+						class="cell border border-2"
+						id="6"
+						data-index="6"
+					></div>
+					<div
+						class="cell border border-2"
+						id="7"
+						data-index="7"
+					></div>
+					<div
+						class="cell border border-2"
+						id="8"
+						data-index="8"
+					></div>
+					<div
+						class="cell border border-2"
+						id="9"
+						data-index="9"
+					></div>
 				</div>
 
 				<!-- 状态提示 -->
-				<div id="game-status" class="mt-3 fs-1">我先去吃口饭</div>
+				<div id="game-status" class="mt-3 fs-1">当前玩家:X</div>
 				<button id="restart" class="mt-3 fs-5" onclick="restartGame()">
 					再来一局
 				</button>
 			</div>
 		</div>
-
-		<script>
-			const boxes = document.querySelectorAll('.cell')
-			let currentPlayer = 'X'
-			const statusDisplay = document.getElementById('game-status')
-
-			boxes.forEach((box) => {
-				box.addEventListener('click', () => {
-					if (box.textContent === '') {
-						box.textContent = currentPlayer
-						currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
-						updateStatus()
-					}
-				})
-			})
-
-			function updateStatus() {
-				statusDisplay.textContent = `当前玩家: ${currentPlayer}`
-			}
-
-			function restartGame() {
-				boxes.forEach((box) => {
-					box.textContent = ''
-				})
-				currentPlayer = 'X'
-			}
-
-			function checkWinner() {}
-		</script>
 	</body>
 
 	<script src="script.js"></script>
