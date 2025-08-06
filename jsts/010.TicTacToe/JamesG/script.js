@@ -1,6 +1,7 @@
 const boxes = document.querySelectorAll('.cell')
 let currentPlayer = 'X'
 const statusDisplay = document.getElementById('game-status')
+const gamestatusDisplay1 = document.getElementById('game-status1')
 let gameActive = true
 const winningCombination = [
 	[0, 1, 2],
@@ -12,6 +13,7 @@ const winningCombination = [
 	[0, 4, 8], // 主对⻆线
 	[2, 4, 6], // 副对⻆线
 ]
+let gameStatus = ''
 let Xinclude = []
 let Oinclude = []
 
@@ -21,6 +23,7 @@ boxes.forEach((box) => {
 		if (box.textContent === '' && gameActive) {
 			box.textContent = currentPlayer
 			checkWinner()
+			checkGameStatus()
 			currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
 			updateStatus()
 		}
@@ -42,6 +45,7 @@ function restartGame() {
 	})
 	currentPlayer = 'X'
 	statusDisplay.textContent = `当前玩家: ${currentPlayer}`
+	gamestatusDisplay1.textContent = ` Playing...`
 	gameActive = true
 }
 
@@ -54,10 +58,37 @@ function checkWinner() {
 			boxes[a].textContent === boxes[b].textContent &&
 			boxes[a].textContent === boxes[c].textContent
 		) {
-			statusDisplay.textContent = `${currentPlayer} 获得胜利`
+			statusDisplay.textContent = `游戏结束`
 			gameActive = false
-			return
+			return boxes[a].textContent
 		}
 	}
 	return null
+}
+
+//判断是否下满了
+function checkBoardFull() {
+	for (const box of boxes) {
+		if (box.textContent === '') {
+			return false // 直接结束函数并返回 false
+		}
+	}
+	return true
+}
+//状态判断进行中;X赢;O赢;平局
+function checkGameStatus() {
+	const winner = checkWinner()
+	if (winner) {
+		gameStatus = winner === 'X' ? 'X' : 'O'
+		gamestatusDisplay1.textContent = ` 玩家 ${winner} 获胜！`
+		return true
+	}
+	if (checkBoardFull()) {
+		gamestatusDisplay1.textContent = ` 平局!! 再战!`
+		statusDisplay.textContent = `游戏结束`
+		gameActive = false
+		return true
+	} else {
+		return false
+	}
 }
