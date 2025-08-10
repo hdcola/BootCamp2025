@@ -14,21 +14,80 @@ const winningCombination = [
 	[2, 4, 6], // 副对⻆线
 ]
 let gameStatus = ''
-let Xinclude = []
-let Oinclude = []
+let gameHistory = []
+let stepNum = 0
 
-//让用户能一次下入棋子
+//让用户能依次下入棋子
 boxes.forEach((box) => {
 	box.addEventListener('click', () => {
 		if (box.textContent === '' && gameActive) {
 			box.textContent = currentPlayer
-			checkWinner()
-			checkGameStatus()
-			currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
-			updateStatus()
+			const index = parseInt(box.id)
+			afterAMove(index)
 		}
 	})
 })
+
+function afterAMove(ind) {
+	if (gameHistory.length === 0 || gameHistory.length === stepNum) {
+		checkWinner()
+		recordMove(ind, currentPlayer)
+
+		currentPlayer = gameHistory[stepNum].player === 'X' ? 'O' : 'X'
+		stepNum += 1
+		buildHistlist()
+		console.log('当前游戏记录：', gameHistory)
+		checkGameStatus()
+
+		updateStatus()
+	} else {
+		gameHistory.length = stepNum
+		checkWinner()
+		recordMove(ind, currentPlayer)
+
+		currentPlayer = gameHistory[stepNum].player === 'X' ? 'O' : 'X'
+		stepNum += 1
+		buildHistlist()
+		console.log('当前游戏记录：', gameHistory)
+		checkGameStatus()
+		updateStatus()
+	}
+}
+
+//用于记录下棋步骤和棋盘状态,存在gameHistory中
+function recordMove(index, player) {
+	const move = {
+		step: gameHistory.length + 1,
+		player: player,
+		position: index,
+		boardStatus: getBoardStatus(),
+		gameAct: gameActive,
+	}
+	gameHistory.push(move)
+}
+
+function getBoardStatus() {
+	return Array.from(boxes).map((box) => box.textContent)
+}
+//-------------------------------------------------------------------
+
+//判断谁赢了,并且某个人获胜之后无法再落子
+function checkWinner() {
+	for (let combination of winningCombination) {
+		const [a, b, c] = combination
+		if (
+			boxes[a].textContent &&
+			boxes[a].textContent === boxes[b].textContent &&
+			boxes[a].textContent === boxes[c].textContent
+		) {
+			statusDisplay.textContent = `游戏结束`
+			gameActive = false
+			return boxes[a].textContent
+		}
+	}
+	return null
+}
+//--------------------------------------------
 
 //用于可以更新玩家状态, 决定该谁来下棋
 function updateStatus() {
@@ -47,23 +106,11 @@ function restartGame() {
 	statusDisplay.textContent = `当前玩家: ${currentPlayer}`
 	gamestatusDisplay1.textContent = ` Playing...`
 	gameActive = true
-}
-
-//判断谁赢了,并且某个人获胜之后无法再落子
-function checkWinner() {
-	for (let combination of winningCombination) {
-		const [a, b, c] = combination
-		if (
-			boxes[a].textContent &&
-			boxes[a].textContent === boxes[b].textContent &&
-			boxes[a].textContent === boxes[c].textContent
-		) {
-			statusDisplay.textContent = `游戏结束`
-			gameActive = false
-			return boxes[a].textContent
-		}
-	}
-	return null
+	stepNum = 0
+	gameHistory = []
+	document.getElementById('stepshows').innerHTML = ''
+	const origon = document.createElement('div')
+	origon.textContent = `第0步,游戏开局`
 }
 
 //判断是否下满了
@@ -89,6 +136,35 @@ function checkGameStatus() {
 		gameActive = false
 		return true
 	} else {
+		gamestatusDisplay1.textContent = ` Playing.....`
+		statusDisplay.textContent = `当前玩家: ${currentPlayer}`
+		gameActive = true
 		return false
 	}
+}
+
+function addAGameRecord(themove) {
+	const newDiv = document.createElement('div') // 创建 div
+	newDiv.textContent = `第${themove.step}步: 玩家${themove.player}` // 添加文字
+	newDiv.className = 'stepShow' // 添加 class（可选）
+
+	newDiv.addEventListener('click', () => {
+		boxes.forEach((box, index) => {
+			box.textContent = themove.boardStatus[index]
+		})
+		gameActive = themove.gameAct
+		stepNum = themove.step
+		currentPlayer = themove.player === 'X' ? 'O' : 'X'
+	})
+	document.getElementById('stepshows').appendChild(newDiv) // 插入
+}
+
+function buildHistlist() {
+	document.getElementById('stepshows').innerHTML = ''
+	const origon = document.createElement('div')
+	origon.textContent = `第0步,游戏开局`
+	document.getElementById('stepshows').appendChild(origon)
+	gameHistory.forEach((hist) => {
+		addAGameRecord(hist)
+	})
 }
