@@ -16,6 +16,7 @@ const winningCombination = [
 let gameStatus = ''
 let gameHistory = []
 let stepNum = 0
+let AIgo = false
 
 //让用户能依次下入棋子
 boxes.forEach((box) => {
@@ -67,7 +68,8 @@ function recordMove(index, player) {
 }
 
 function getBoardStatus() {
-	return Array.from(boxes).map((box) => box.textContent)
+	bdStatus = Array.from(boxes).map((box) => box.textContent)
+	return bdStatus
 }
 //-------------------------------------------------------------------
 
@@ -168,3 +170,60 @@ function buildHistlist() {
 		addAGameRecord(hist)
 	})
 }
+
+//对战AI助手-----------------------------------------------------------------
+
+//找到空白格的方程
+function findEmptyBlock() {
+	let emptyBlock = []
+	currentbdStatus = getBoardStatus()
+	currentbdStatus.forEach((item, position) => {
+		if (item === '') {
+			emptyBlock.push(position)
+		}
+	})
+
+	return emptyBlock
+}
+
+//随机落子的方程(先中间,再角落,后边边)
+function RandomGo() {
+	let emptyBlock = []
+	let cornerSet = [0, 2, 6, 8]
+	let availbleCorner = emptyBlock.filter((value) => cornerSet.includes(value))
+	let sideSet = [1, 3, 5, 7]
+	let availbleSide = emptyBlock.filter((value) => sideSet.includes(value))
+	let GoPosition = -1
+	emptyBlock = findEmptyBlock()
+	// if (emptyBlock.length === 0) {
+	// 	return
+	// }
+	if (emptyBlock.includes(4)) {
+		GoPosition = 4
+	}
+	if (availbleCorner.length != 0) {
+		GoPosition =
+			availbleCorner[Math.floor(Math.random() * availbleCorner.length)]
+	}
+	if (availbleSide.length != 0) {
+		GoPosition =
+			availbleSide[Math.floor(Math.random() * availbleSide.length)]
+	}
+	return GoPosition
+}
+
+//寻找快要胜利的点位的方程
+
+//统计能达成快要胜利的点位的方程.
+
+//废柴AI: 随机下
+
+//初级AI: 能赢就赢,能堵就堵,其他随机下
+
+//中级AI: 初级AI+先走中间>角落>边边
+
+//预胜利计划: 统计每个点位能形成几个快要胜利的点位
+
+//高级AI:初级AI + 预胜利计划
+
+//顶级AI: 高级AI+ 部分特殊情况的手动处理(应该不超过5个)
