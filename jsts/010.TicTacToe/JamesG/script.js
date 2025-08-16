@@ -16,25 +16,38 @@ const winningCombination = [
 let gameStatus = ''
 let gameHistory = []
 let stepNum = 0
-let AIgo = false
+let isAIOn = true
+let aiSide = 'O'
+let aiThinking = false
 
 //让用户能依次下入棋子
 boxes.forEach((box) => {
 	box.addEventListener('click', () => {
-		if (box.textContent === '' && gameActive) {
-			box.textContent = currentPlayer
+		if (
+			box.textContent === '' &&
+			gameActive &&
+			currentPlayer !== aiSide && // 人类回合才允许点
+			!aiThinking // AI 思考时禁点
+		) {
 			const index = parseInt(box.id)
-			makeAMove(index)
+			makeAMove(index) // ✅ DOM 改动统一在 makeAMove
 		}
 	})
 })
 
 function makeAMove(ind) {
+	if (!gameActive) return
+	if (boxes[ind].textContent !== '') return // 双重保护
+
+	// ✅ 在这里落子（无论人/AI）
+	boxes[ind].textContent = currentPlayer
+
 	if (gameHistory.length === 0 || gameHistory.length === stepNum) {
 		checkWinner()
 		recordMove(ind, currentPlayer)
 
 		currentPlayer = gameHistory[stepNum].player === 'X' ? 'O' : 'X'
+		maybePlayAI()
 		stepNum += 1
 		buildHistlist()
 		console.log('当前游戏记录：', gameHistory)
@@ -47,6 +60,7 @@ function makeAMove(ind) {
 		recordMove(ind, currentPlayer)
 
 		currentPlayer = gameHistory[stepNum].player === 'X' ? 'O' : 'X'
+		maybePlayAI()
 		stepNum += 1
 		buildHistlist()
 		console.log('当前游戏记录：', gameHistory)
@@ -68,7 +82,7 @@ function recordMove(index, player) {
 }
 
 function getBoardStatus() {
-	bdStatus = Array.from(boxes).map((box) => box.textContent)
+	const bdStatus = Array.from(boxes).map((box) => box.textContent)
 	return bdStatus
 }
 //-------------------------------------------------------------------
@@ -157,6 +171,7 @@ function addAGameRecord(themove) {
 		gameActive = themove.gameAct
 		stepNum = themove.step
 		currentPlayer = themove.player === 'X' ? 'O' : 'X'
+		maybePlayAI()
 	})
 	document.getElementById('stepshows').appendChild(newDiv) // 插入
 }
@@ -186,37 +201,46 @@ function findEmptyBlock() {
 	return emptyBlock
 }
 
-//随机落子的方程(先中间,再角落,后边边)
-function RandomGo() {
-	let emptyBlock = []
-	let cornerSet = [0, 2, 6, 8]
-	let availbleCorner = emptyBlock.filter((value) => cornerSet.includes(value))
-	let sideSet = [1, 3, 5, 7]
-	let availbleSide = emptyBlock.filter((value) => sideSet.includes(value))
-	let GoPosition = -1
-	emptyBlock = findEmptyBlock()
-	// if (emptyBlock.length === 0) {
-	// 	return
-	// }
-	if (emptyBlock.includes(4)) {
-		GoPosition = 4
-	}
+//废柴AI: 随机落子的方程(先中间,再角落,后边边)
+function StupidAIGo() {
+	let emptyBlock = findEmptyBlock()
+	const cornerSet = [0, 2, 6, 8]
+	const availbleCorner = emptyBlock.filter((value) =>
+		cornerSet.includes(value)
+	)
+	const sideSet = [1, 3, 5, 7]
+	const availbleSide = emptyBlock.filter((value) => sideSet.includes(value))
+	if (emptyBlock.length === 0) return -1
+	if (emptyBlock.includes(4)) return 4
+
 	if (availbleCorner.length != 0) {
-		GoPosition =
-			availbleCorner[Math.floor(Math.random() * availbleCorner.length)]
+		return availbleCorner[Math.floor(Math.random() * availbleCorner.length)]
 	}
 	if (availbleSide.length != 0) {
-		GoPosition =
-			availbleSide[Math.floor(Math.random() * availbleSide.length)]
+		return availbleSide[Math.floor(Math.random() * availbleSide.length)]
 	}
-	return GoPosition
+	return emptyBlock[Math.floor(Math.random() * empty.length)]
+}
+
+//让AI落子: AI能落子,且轮到AI落子,
+function maybePlayAI() {
+	if (isAIOn && gameActive && currentPlayer === aiSide && !aiThinking) {
+		aiThinking = true
+
+		setTimeout(() => {
+			const aiIndex = StupidAIGo() // 只算位置的纯函数
+			// 二次校验，防止期间被重开/回退
+			if (gameActive && currentPlayer === aiSide && aiIndex !== -1) {
+				makeAMove(aiIndex) // 或 makeAMove(aiIndex)（取决于你最终封装）
+			}
+			aiThinking = false
+		}, 200)
+	}
 }
 
 //寻找快要胜利的点位的方程
 
 //统计能达成快要胜利的点位的方程.
-
-//废柴AI: 随机下
 
 //初级AI: 能赢就赢,能堵就堵,其他随机下
 
