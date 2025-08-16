@@ -23,12 +23,12 @@ boxes.forEach((box) => {
 		if (box.textContent === '' && gameActive) {
 			box.textContent = currentPlayer
 			const index = parseInt(box.id)
-			afterAMove(index)
+			makeAMove(index)
 		}
 	})
 })
 
-function afterAMove(ind) {
+function makeAMove(ind) {
 	if (gameHistory.length === 0 || gameHistory.length === stepNum) {
 		checkWinner()
 		recordMove(ind, currentPlayer)
