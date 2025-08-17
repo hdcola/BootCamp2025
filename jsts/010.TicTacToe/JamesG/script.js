@@ -37,7 +37,6 @@ boxes.forEach((box) => {
 
 function makeAMove(ind) {
 	if (!gameActive) return
-	if (boxes[ind].textContent !== '') return // 双重保护
 
 	// ✅ 在这里落子（无论人/AI）
 	boxes[ind].textContent = currentPlayer
@@ -191,7 +190,7 @@ function buildHistlist() {
 //找到空白格的方程
 function findEmptyBlock() {
 	let emptyBlock = []
-	currentbdStatus = getBoardStatus()
+	const currentbdStatus = getBoardStatus()
 	currentbdStatus.forEach((item, position) => {
 		if (item === '') {
 			emptyBlock.push(position)
@@ -201,8 +200,20 @@ function findEmptyBlock() {
 	return emptyBlock
 }
 
-//废柴AI: 随机落子的方程(先中间,再角落,后边边)
-function StupidAIGo() {
+//找到某个棋子的位置
+function findTheBlock(thatone) {
+	let thatSet = []
+	const currentbdStatus = getBoardStatus()
+	currentbdStatus.forEach((item, position) => {
+		if (item === thatone) {
+			thatSet.push(position)
+		}
+	})
+	return thatSet
+}
+
+//小规律落子的方程(先中间,再角落,后边边)
+function midCornerSide() {
 	let emptyBlock = findEmptyBlock()
 	const cornerSet = [0, 2, 6, 8]
 	const availbleCorner = emptyBlock.filter((value) =>
@@ -219,7 +230,7 @@ function StupidAIGo() {
 	if (availbleSide.length != 0) {
 		return availbleSide[Math.floor(Math.random() * availbleSide.length)]
 	}
-	return emptyBlock[Math.floor(Math.random() * empty.length)]
+	return emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
 }
 
 //让AI落子: AI能落子,且轮到AI落子,
@@ -228,7 +239,7 @@ function maybePlayAI() {
 		aiThinking = true
 
 		setTimeout(() => {
-			const aiIndex = StupidAIGo() // 只算位置的纯函数
+			const aiIndex = midAIGo() // 只算位置的纯函数
 			// 二次校验，防止期间被重开/回退
 			if (gameActive && currentPlayer === aiSide && aiIndex !== -1) {
 				makeAMove(aiIndex) // 或 makeAMove(aiIndex)（取决于你最终封装）
@@ -239,12 +250,62 @@ function maybePlayAI() {
 }
 
 //寻找快要胜利的点位的方程
+function findWinningMove(board, player) {
+	for (let combo of winningCombination) {
+		let [a, b, c] = combo
+
+		let values = [board[a], board[b], board[c]]
+		// 统计某个player的数量 和 空格的数量
+		let playerCount = values.filter((v) => v === player).length
+		let emptyCount = values.filter((v) => v === '').length
+
+		if (playerCount === 2 && emptyCount === 1) {
+			// 返回空格的位置
+			if (board[a] === '') return a
+			if (board[b] === '') return b
+			if (board[c] === '') return c
+		}
+	}
+	return null // 没有找到
+}
 
 //统计能达成快要胜利的点位的方程.
 
+//废柴AI: 中间 - 角落 - 边边
+
+function StupidAIGo() {
+	let emptyBlock = findEmptyBlock()
+	const a = Math.floor(Math.random() * 2)
+	if (a === 0) {
+		return midCornerSide()
+	}
+	if (a === 1) {
+		return emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
+	}
+}
+
 //初级AI: 能赢就赢,能堵就堵,其他随机下
 
+function easyAIGo() {
+	let emptyBlock = findEmptyBlock()
+	const board = getBoardStatus()
+	return (
+		findWinningMove(board, aiSide) ??
+		findWinningMove(board, aiSide === 'X' ? 'O' : 'X') ??
+		emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
+	)
+}
+
 //中级AI: 初级AI+先走中间>角落>边边
+
+function midAIGo() {
+	const board = getBoardStatus()
+	return (
+		findWinningMove(board, aiSide) ??
+		findWinningMove(board, aiSide === 'X' ? 'O' : 'X') ??
+		midCornerSide()
+	)
+}
 
 //预胜利计划: 统计每个点位能形成几个快要胜利的点位
 
