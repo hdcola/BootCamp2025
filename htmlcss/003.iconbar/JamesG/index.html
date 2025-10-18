@@ -8,6 +8,10 @@
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+		/>
 	</head>
 	<body>
 		<div>honrizontal bar</div>
@@ -15,16 +19,16 @@
 			<div class="block1">
 				<i class="material-icons">home</i>
 			</div>
-			<div class="block_r">
+			<div class="block_r1">
 				<i class="material-icons">public</i>
 			</div>
-			<div class="block_r">
+			<div class="block_r1">
 				<i class="material-icons">mail</i>
 			</div>
-			<div class="block_r">
+			<div class="block_r1">
 				<i class="material-icons">search</i>
 			</div>
-			<div class="block_r">
+			<div class="block_r1">
 				<i class="material-icons">delete</i>
 			</div>
 		</div>
@@ -50,6 +54,17 @@
 	</body>
 
 	<style>
+		.material-icons {
+			font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+			color: rgba(10, 10, 10, 0.897);
+			font-size: 40px;
+			position: absolute;
+			left: 50%;
+			bottom: 20%;
+			margin: 3px;
+			transform: translateX(-50%);
+		}
+
 		.material-symbols-outlined {
 			font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 			color: rgb(241, 246, 251);
@@ -61,7 +76,7 @@
 		}
 
 		.honrital_container {
-			background-color: rgb(116, 118, 116);
+			background-color: rgb(239, 248, 248);
 			display: flex;
 			flex-direction: row;
 		}
@@ -76,14 +91,19 @@
 			height: 60px;
 			align-items: center;
 			justify-content: center;
+			margin: 2px;
 		}
 
 		.block1:hover {
-			background-color: black;
+			background-color: rgb(188, 185, 185);
 		}
 
 		.block_r:hover {
-			background-color: black;
+			background-color: rgb(188, 185, 185);
+		}
+
+		.block_r1:hover {
+			background-color: rgb(188, 185, 185);
 		}
 
 		.block_r {
@@ -93,6 +113,17 @@
 			height: 60px;
 			align-items: center;
 			justify-content: center;
+			margin: 2px;
+		}
+
+		.block_r1 {
+			position: relative;
+			background-color: rgb(239, 248, 248);
+			width: 60px;
+			height: 60px;
+			align-items: center;
+			justify-content: center;
+			margin: 2px;
 		}
 	</style>
 </html>
