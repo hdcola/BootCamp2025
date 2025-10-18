@@ -30,12 +30,13 @@ html{
  .box{
     height: 350px;
     width: 500px;
-    display: block;
+    display: flex;
     background-color: rgb(255, 255, 255);
     border-style: solid;
     border-width: 2px;
     border-color: rgb(223, 218, 218);
     border-radius: 20px;
+    flex-direction: column;
 }
 
 .container .box .title{
@@ -62,10 +63,11 @@ html{
     box-shadow: 2px 2px 5px rgb(202, 201, 201);
     cursor: pointer;
     align-items: center;
+    flex: 1;
 }
 
 .box-touch .box-touch-2{
-    width: 250px;
+    width: 200px;
     height: 50px;
     background-color: rgb(81, 81, 211);
     justify-content: center;
@@ -74,4 +76,5 @@ html{
     display: flex;
     border-radius: 20px;
     cursor: pointer;
+    
 }
