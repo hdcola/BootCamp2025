@@ -2,4 +2,4 @@
 
 Show base url: https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/
 
-- [JammesG](https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/JamesG/)
+-   [JammesG](https://JadGu.github.io/BootCamp2025/htmlcss/002.iconfont/JamesG/)
