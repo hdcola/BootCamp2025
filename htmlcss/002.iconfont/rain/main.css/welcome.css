@@ -1,0 +1,154 @@
+html{
+    background-color: rgb(231, 230, 230);
+}
+
+
+.box-1 .open-sans-Sams {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700px;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+.box-1{
+width: 1500px;
+height: 200px;
+background-color: rgb(166, 206, 241);
+display: flex;
+border-style: solid;
+border-width: 1px;
+border-color: black;
+margin-left: 70px;
+flex-direction: column;
+}
+
+.box-1 .title{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(87, 85, 85);
+    border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+}
+
+.box-1 .second-tab{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+    
+} 
+
+
+.box-1 .thrid-tab{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+}
+
+.box-1 .fourth-tab{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+}
+
+.box-1 .arrow_drop_down{
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+    transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+    margin-left: 20px;
+    margin-top: 20px;
+
+}
+
+.box-2 .arrow_drop_down{
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+    transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+    margin-left: 20px;
+    margin-top: 20px;
+
+}
+
+
+.material-symbols-outlined {
+    margin-left: 15px;
+    margin-top: 5px;
+
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+  
+}
+
+.box-2{
+    width: 1500px;
+height: 150px;
+background-color: rgb(166, 206, 241);
+display: flex;
+border-style: solid;
+border-width: 1px;
+border-color: black;
+margin-left: 70px;
+flex-direction: column;
+margin-top: 50px;
+}
+
+
+   .box-2 .title-2{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(87, 85, 85);
+    border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+}
+
+.box-2 .second-tab-2{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+    
+} 
+
+
+.box-2 .thrid-tab-2{
+    width: 1500px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+border-style: solid;
+border-width: 1px;
+border-color: black;
+font-family:"Montserrat", sans-serif;
+}
+
