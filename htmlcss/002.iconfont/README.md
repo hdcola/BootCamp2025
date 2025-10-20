@@ -2,6 +2,6 @@
 
 Show base url: https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/
 
-- [JammesG](https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/JamesG/)
-- Bolin : https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/Bolin/
-- rain : https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/rain/
+-   [JammesG](https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/JamesG/)
+-   Bolin : https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/Bolin/
+-   rain : https://hdcola.github.io/BootCamp2025/htmlcss/002.iconfont/rain/
