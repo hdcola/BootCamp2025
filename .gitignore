@@ -5,3 +5,4 @@ config_env.js
 jsts/007.Weather/Allen/.http
 jsts/007.Weather/Allen/.json
 jsts/008.GeoIP/Allen/javascript-version/scripts/.http
+.vscode/
