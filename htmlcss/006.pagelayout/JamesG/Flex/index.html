@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Flex练习</title>
+		<style>
+			body {
+				height: 100%;
+			}
+
+			.container {
+				display: flex;
+				flex-direction: column;
+				height: 100vh;
+			}
+			.header {
+				height: 75px;
+				/* flex-grow: 1; */
+				border: solid black 2px;
+			}
+			.lower {
+				display: flex;
+				flex-direction: row;
+				flex-grow: 1;
+				border: solid black 2px;
+			}
+			.Aside {
+				width: 90 px;
+				border: solid black 2px;
+			}
+			.left {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				border: solid black 2px;
+			}
+			.table {
+				height: 50px;
+				/* flex-grow: 1; */
+				border: solid black 2px;
+			}
+			.Main {
+				/* height: 75px; */
+				flex-grow: 1;
+				border: solid black 2px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">Header</div>
+			<div class="lower">
+				<div class="aside">Aside</div>
+				<div class="left">
+					<div class="table">Table</div>
+					<div class="Main">Main</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
