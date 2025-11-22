@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body {
+        display: grid;
+        min-height: 100dvh;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        margin: 0;
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-template-rows: repeat(6, minmax(0, 1fr));
+        gap: 0.25rem;
+      }
+      .basic {
+        color: white;
+        padding: 1rem;
+      }
+      .header {
+        background-color: #3b69ff;
+        color: white;
+        grid-column: span 6 / span 6;
+      }
+      .aside {
+        background-color: #ff3b3b;
+        color: white;
+        grid-row: span 5 / span 5;
+      }
+      .table {
+        background-color: #22c55e;
+        color: white;
+        grid-column: span 5 / span 5;
+      }
+      .main {
+        background-color: #f97316;
+        color: white;
+        grid-row: span 4 / span 4;
+        grid-column: span 5 / span 5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="basic header">Header</div>
+      <div class="basic aside">Aside</div>
+      <div class="basic table">Table</div>
+      <div class="basic main">Main</div>
+    </div>
+  </body>
+</html>
