@@ -19,7 +19,10 @@ const client = new Client({
 
 // Configure the client
 const ai = new GoogleGenAI({
-  apiKey: "your-api-key",
+  apiKey: "your-api-key-1",
+  httpOptions: {
+    baseUrl: `http://localhost:8317/`,
+  },
 });
 
 // Initialize the connection between client and server
@@ -28,8 +31,8 @@ await client.connect(serverParams);
 // Send request to the model with MCP tools
 // Open up a new tab and navigate to https://moodle.concordia.ca/moodle/my/. click "login" and click "COMP 249 D 2252 (Fall 2025)
 const response = await ai.models.generateContent({
-  model: "gemini-2.5-flash",
-  contents: `How many tabs do i opened in chrome now?`,
+  model: "gemini-3-flash-preview",
+  contents: `Open up a new tab and navigate to https://moodle.concordia.ca/moodle/my/. click "login", click "COMP 249 D 2252 (Fall 2025), find the grade section, and tell me my grade.`,
   config: {
     tools: [mcpToTool(client)], // uses the session, will automatically call the tool
     // Uncomment if you **don't** want the sdk to automatically call the tool
