@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Grid 练习</title>
+		<style>
+			html,
+			body {
+				height: 100%;
+				margin: 0;
+			}
+
+			.container {
+				/* border: 2px solid white; */
+				background-color: bisque;
+				display: grid;
+				height: 100vh;
+				grid-template-columns: [col-start] 150px 1fr;
+				grid-template-rows: 50px 50px 1fr;
+				gap: 1px;
+			}
+
+			.Header {
+				border: 1px solid white;
+				background-color: brown;
+				grid-column: 1/3;
+				grid-row: 1/2;
+			}
+
+			.Aside {
+				border: 1px solid white;
+				background-color: brown;
+				grid-column: 1/2;
+				grid-row: 2/4;
+			}
+
+			.Table {
+				border: 1px solid white;
+				background-color: brown;
+				grid-column: 2/3;
+				grid-row: 2/3;
+			}
+
+			.Main {
+				border: 1px solid white;
+				background-color: brown;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="Header">Header</div>
+			<div class="Aside">Aside</div>
+			<div class="Table">Table</div>
+			<div class="Main">Main</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,131 @@
+.icon-bar-hor{
+    width: 2000px;
+    height: 80px;
+    display: flex;
+    background-color: rgb(72, 73, 73);
+}
+
+.icon-bar-hor .icon{
+    width: 400px ;
+    height: 80px;
+    display: flex;
+    background-color: aliceblue;
+    flex-direction: row;
+}
+
+.material-symbols-outlined{
+ font-size: 40px;
+ color: white;
+}
+.icon .block-1{
+    
+    width: 100px;
+    height: 80px;
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.icon .block-2{
+    width: 100px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+}
+.icon .block-3{
+    width: 100px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.icon .block-4{
+    width: 100px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+   align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.icon .block-5{
+    width: 100px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.icon-bar-ver{
+    margin-top: 100px;
+    width: 80px;
+    height: 400px;
+    background-color: rgb(102, 102, 102);
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-bar-ver .iconv{
+    width: 80px;
+    height: 400px;
+    display: flex;
+    background-color: aliceblue;
+    flex-direction: column;
+}
+
+.iconv .block-1v{
+    
+    width: 80px;
+    height: 80px;
+    background-color: green;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.iconv .block-2v{
+    width: 80px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    
+}
+.iconv .block-3v{
+    width: 80px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.iconv .block-4v{
+    width: 80px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+   align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.iconv .block-5v{
+    width: 80px;
+    height: 80px;
+    background-color: rgb(72, 73, 73);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+
+
+.block-1:hover, .block-1v:hover , .block-2:hover,.block-2v:hover ,.block-3:hover ,.block-3v:hover ,.block-4:hover, .block-4v:hover, .block-5:hover ,.block-5v:hover{
+    background-color: rgb(51, 51, 51);
+
+}

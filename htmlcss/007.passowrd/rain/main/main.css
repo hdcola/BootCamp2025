@@ -1,0 +1,234 @@
+.back-g{
+    width: 600px;
+    height: 650px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(5, 75, 136);
+    margin-left: 700px;
+    margin-top: 100px;
+    display: flex;
+}
+
+.back-g .box{
+    width: 580px;
+    height: 630px;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: left;
+    display: flex;
+    border-radius: 20px;
+    flex-direction: column;
+}
+.box .text-1{
+ padding-left: 30px;
+    padding-top: 20px;
+    align-self: flex-start;
+}
+
+.box .password-type{
+    width: 520px;
+    height: 50px;
+    background-color: rgb(219, 219, 219);
+    display: flex;
+    align-self: flex-start;
+    margin-left: 30px;
+    flex-direction: row;
+    border-radius: 5px;
+    
+}
+
+.password-type .white-box-1{
+    width: 170px;
+    height: 40px;
+    background-color: rgb(219, 219, 219);
+    margin-top: 5px;
+   margin-left: 5px;
+   border-radius: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+cursor: pointer;
+}
+
+.password-type .white-box-2{
+    width: 170px;
+    height: 40px;
+    background-color: rgb(219, 219, 219);
+    margin-top: 5px;
+   margin-left: 5px;
+   border-radius: 5px;
+   justify-content: center;
+   align-items: center;
+   display: flex;
+   cursor: pointer;
+}
+.password-type .white-box-3{
+    width: 170px;
+    height: 40px;
+    background-color: rgb(219, 219, 219);
+    margin-top: 5px;
+   margin-left: 5px;
+   border-radius: 5px;
+   justify-content: center;
+   align-items: center;
+   display: flex;
+   cursor: pointer;
+}
+
+.white-box-1:hover , .white-box-2:hover , .white-box-3:hover{
+    background-color: white;
+}
+.text-2{
+    padding-right: 320px;
+}
+hr{
+    width: 520px;
+  border: none;
+  border-top: 2px solid #ccc;
+  margin: 20px auto;
+}
+.text-box-1{
+    width: 540px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+}
+.text-box-1 .text-3{
+align-items: end;
+margin-left: 10px;
+}
+
+.text-box-1 .slider-1{
+    margin-left: 100px;
+    width: 300px;
+    height: 6px;
+    outline: none;
+    border-radius: 0;
+}
+
+.text-box-1 .numberInput{
+    width: 40px;
+    height: 20px;
+
+}
+
+
+.box-text{
+    width: 540px;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background: #ccc;
+  border-radius: 25px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.3s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 19px;
+  width: 19px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+input:checked + .slider {
+  background: #0084ff;
+}
+
+input:checked + .slider::before {
+  transform: translateX(25px);
+}
+
+.text-5{
+ align-self: self-start;
+text-align: left;
+margin-left: 30px;
+}
+
+.big-box{
+  width: 520px;
+  height: 75px;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px; 
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(126, 125, 125);
+}
+
+.box-text-2{
+  width: 500px;
+  height: 50px;
+  display: flex;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  margin-top: 20px;
+}
+
+.box-text-2 .boxtype-1{
+  width: 225px;
+  height: 50px;
+  display: flex;
+  background-color: rgb(6, 125, 230);
+  border-radius: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.box-text-2 .boxtype-2{
+  width: 225px;
+  height: 50px;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  margin-left: 50px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: rgb(0, 191, 255);
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+p{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.text-4{
+  color: blue;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+.boxtype-2.text-4{
+color: white;
+}
+
+.text-slide{
+  margin-left: 10px;
+}

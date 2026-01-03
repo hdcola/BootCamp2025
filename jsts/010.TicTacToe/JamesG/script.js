@@ -188,41 +188,41 @@ function buildHistlist() {
 //对战AI助手-----------------------------------------------------------------
 
 //找到空白格的方程
-function findEmptyBlock() {
-	let emptyBlock = []
+function findEmptyBlocks() {
+	let emptyBlocks = []
 	const currentbdStatus = getBoardStatus()
 	currentbdStatus.forEach((item, position) => {
 		if (item === '') {
-			emptyBlock.push(position)
+			emptyBlocks.push(position)
 		}
 	})
 
-	return emptyBlock
+	return emptyBlocks
 }
 
-//找到某个棋子的位置
-function findTheBlock(thatone) {
-	let thatSet = []
-	const currentbdStatus = getBoardStatus()
-	currentbdStatus.forEach((item, position) => {
-		if (item === thatone) {
-			thatSet.push(position)
-		}
-	})
-	return thatSet
-}
+//找到某个棋子的位置------------------------------没用上,具体删不删一会再看
+// function findTheBlock(thatone) {
+// 	let thatSet = []
+// 	const currentbdStatus = getBoardStatus()
+// 	currentbdStatus.forEach((item, position) => {
+// 		if (item === thatone) {
+// 			thatSet.push(position)
+// 		}
+// 	})
+// 	return thatSet
+// }
 
 //小规律落子的方程(先中间,再角落,后边边)
 function midCornerSide() {
-	let emptyBlock = findEmptyBlock()
+	let emptyBlocks = findEmptyBlocks()
 	const cornerSet = [0, 2, 6, 8]
-	const availbleCorner = emptyBlock.filter((value) =>
+	const availbleCorner = emptyBlocks.filter((value) =>
 		cornerSet.includes(value)
 	)
 	const sideSet = [1, 3, 5, 7]
-	const availbleSide = emptyBlock.filter((value) => sideSet.includes(value))
-	if (emptyBlock.length === 0) return -1
-	if (emptyBlock.includes(4)) return 4
+	const availbleSide = emptyBlocks.filter((value) => sideSet.includes(value))
+	if (emptyBlocks.length === 0) return -1
+	if (emptyBlocks.includes(4)) return 4
 
 	if (availbleCorner.length != 0) {
 		return availbleCorner[Math.floor(Math.random() * availbleCorner.length)]
@@ -230,7 +230,7 @@ function midCornerSide() {
 	if (availbleSide.length != 0) {
 		return availbleSide[Math.floor(Math.random() * availbleSide.length)]
 	}
-	return emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
+	return emptyBlocks[Math.floor(Math.random() * emptyBlocks.length)]
 }
 
 //让AI落子: AI能落子,且轮到AI落子,
@@ -269,30 +269,28 @@ function findWinningMove(board, player) {
 	return null // 没有找到
 }
 
-//统计能达成快要胜利的点位的方程.
-
 //废柴AI: 中间 - 角落 - 边边
 
 function StupidAIGo() {
-	let emptyBlock = findEmptyBlock()
-	const a = Math.floor(Math.random() * 2)
-	if (a === 0) {
+	let emptyBlocks = findEmptyBlocks()
+	const a = Math.random() * 2
+	if (a <= 1.5) {
 		return midCornerSide()
 	}
-	if (a === 1) {
-		return emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
+	if (a > 1.5) {
+		return emptyBlocks[Math.floor(Math.random() * emptyBlocks.length)]
 	}
 }
 
 //初级AI: 能赢就赢,能堵就堵,其他随机下
 
 function easyAIGo() {
-	let emptyBlock = findEmptyBlock()
+	let emptyBlocks = findEmptyBlocks()
 	const board = getBoardStatus()
 	return (
 		findWinningMove(board, aiSide) ??
 		findWinningMove(board, aiSide === 'X' ? 'O' : 'X') ??
-		emptyBlock[Math.floor(Math.random() * emptyBlock.length)]
+		emptyBlocks[Math.floor(Math.random() * emptyBlocks.length)]
 	)
 }
 
@@ -303,8 +301,36 @@ function midAIGo() {
 	return (
 		findWinningMove(board, aiSide) ??
 		findWinningMove(board, aiSide === 'X' ? 'O' : 'X') ??
-		midCornerSide()
+		StupidAIGo()
 	)
+}
+
+//统计能达成快要胜利的点位的方程.
+
+function seniorFindWinMove(board, player) {
+	const emptyBlocks = findEmptyBlocks()
+
+	for (goes of emptyBlocks.length - 1) {
+		emptyBlocks[goes] = player === 'X' ? 'O' : 'X'
+		seniorFindWinMove()
+	}
+
+	// for (let combo of winningCombination) {
+	// 	let [a, b, c] = combo
+
+	// 	let values = [board[a], board[b], board[c]]
+	// 	// 统计某个player的数量 和 空格的数量
+	// 	let playerCount = values.filter((v) => v === player).length
+	// 	let emptyCount = values.filter((v) => v === '').length
+
+	// 	if (playerCount === 1 && emptyCount === 2) {
+	// 		// 返回空格的位置
+	// 		if (board[a] === '') return a
+	// 		if (board[b] === '') return b
+	// 		if (board[c] === '') return c
+	// 	}
+	// }
+	// return null // 没有找到
 }
 
 //预胜利计划: 统计每个点位能形成几个快要胜利的点位
