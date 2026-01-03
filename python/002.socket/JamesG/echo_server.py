@@ -1,7 +1,7 @@
 import socket
 import threading
 from google import genai
-from google.genai import types
+# from google.genai import types
 import os
 # api_key = os.getenv("GOOGLE_API_KEY")
 # print(api_key)
