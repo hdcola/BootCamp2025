@@ -9,7 +9,7 @@ const print = console.log
 
 // Configure the client
 const ai = new GoogleGenAI({
-	apiKey: 'AIzaSyCXTaSsK79OGQ3XJLc51zsqNyMnjiYbMuM',
+	apiKey: '',
 })
 
 // Define user prompt
