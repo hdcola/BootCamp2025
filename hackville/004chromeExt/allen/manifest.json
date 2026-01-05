@@ -1,0 +1,19 @@
+{
+  "name": "AI Summary Extensions",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Click to open panel",
+    "default_icon": "logo.png"
+  },
+  "icons": { "16": "logo.png", "48": "logo.png", "128": "logo.png" },
+  "permissions": ["tabs", "scripting", "activeTab", "sidePanel", "storage"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "host_permissions": ["<all_urls>"]
+}
