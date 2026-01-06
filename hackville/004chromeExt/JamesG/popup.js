@@ -17,16 +17,17 @@ async function getTabId() {
 	console.log('Tab ID:', tab.id)
 	return tab.id
 }
-function getTitle() { return document.title; }
+function getTitle() {
+	return document.title
+}
 
-chrome.scripting
-    .executeScript({
-      target : {tabId : getTabId()},
-      func : getTitle,
-    })
-    .then(() => console.log("injected a function"));
+// chrome.scripting
+//     .executeScript({
+//       target : {tabId : getTabId()},
+//       func : getTitle,
+//     })
+//     .then(() => console.log("injected a function"));
 
-    
 ;(async () => {
 	await showPopups()
 	await getTabId()
