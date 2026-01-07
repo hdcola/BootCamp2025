@@ -1,3 +1,4 @@
+import { getCurrentTab, checkInternalPageError } from "./utils.js";
 // Tab 切换函数
 function switchTab(tab) {
   const mainTab = document.getElementById("main-tab");
@@ -89,30 +90,39 @@ document.getElementById("tab-settings").addEventListener("click", function () {
 
 // 页面加载时读取保存的设置
 window.addEventListener("load", function () {
-  if (typeof chrome !== "undefined" && chrome.storage) {
-    chrome.storage.sync.get(
-      ["url", "prompt", "apiKey", "model"],
-      function (result) {
-        if (result.url) document.getElementById("api-url").value = result.url;
-        if (result.prompt)
-          document.getElementById("prompt").value = result.prompt;
-        if (result.apiKey)
-          document.getElementById("api-key").value = result.apiKey;
-        if (result.model) document.getElementById("model").value = result.model;
-      }
-    );
-  } else {
-    // 从 localStorage 读取
-    const saved = localStorage.getItem("settings");
-    if (saved) {
-      const settings = JSON.parse(saved);
-      if (settings.url) document.getElementById("api-url").value = settings.url;
-      if (settings.prompt)
-        document.getElementById("prompt").value = settings.prompt;
-      if (settings.apiKey)
-        document.getElementById("api-key").value = settings.apiKey;
-      if (settings.model)
-        document.getElementById("model").value = settings.model;
+  getCurrentTab().then((tab) => {
+    if (/^chrome:\/\//.test(tab?.url || "")) {
+      document.getElementById("refresh-btn").style.display = "none";
+      return;
     }
-  }
+
+    if (typeof chrome !== "undefined" && chrome.storage) {
+      chrome.storage.sync.get(
+        ["url", "prompt", "apiKey", "model"],
+        function (result) {
+          if (result.url) document.getElementById("api-url").value = result.url;
+          if (result.prompt)
+            document.getElementById("prompt").value = result.prompt;
+          if (result.apiKey)
+            document.getElementById("api-key").value = result.apiKey;
+          if (result.model)
+            document.getElementById("model").value = result.model;
+        }
+      );
+    } else {
+      // 从 localStorage 读取
+      const saved = localStorage.getItem("settings");
+      if (saved) {
+        const settings = JSON.parse(saved);
+        if (settings.url)
+          document.getElementById("api-url").value = settings.url;
+        if (settings.prompt)
+          document.getElementById("prompt").value = settings.prompt;
+        if (settings.apiKey)
+          document.getElementById("api-key").value = settings.apiKey;
+        if (settings.model)
+          document.getElementById("model").value = settings.model;
+      }
+    }
+  });
 });

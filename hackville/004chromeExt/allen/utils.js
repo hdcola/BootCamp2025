@@ -29,6 +29,16 @@ function updateMainContent(content) {
   }
 }
 
+// Internal Page error
+function checkInternalPageError(tab) {
+  if (/^chrome:\/\//.test(tab?.url || "")) {
+    displayError(
+      "Current page is a browser internal page and cannot retrieve content."
+    );
+    return;
+  }
+}
+
 // 显示错误消息的函数
 function displayError(errorMessage) {
   const mainContent = document.getElementById("main-content");
@@ -56,7 +66,7 @@ function displayError(errorMessage) {
         box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
       ">
         <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
-        <h3 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 600;">错误</h3>
+        <h3 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 600;">Error</h3>
         <p style="margin: 0; font-size: 14px; line-height: 1.6; opacity: 0.95;">${errorMessage}</p>
       </div>
     `;
@@ -85,11 +95,12 @@ function refreshContent() {
 
   if (mainContent) {
     mainContent.innerHTML =
-      '<div style="text-align: center; padding: 40px; color: #667eea;"><div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div><p style="margin-top: 16px; font-weight: 600;">正在刷新...</p></div>';
+      '<div style="text-align: center; padding: 40px; color: #667eea;"><div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div><p style="margin-top: 16px; font-weight: 600;">Refreshing...</p></div>';
   }
 
   // 重新执行脚本获取最新内容
   getCurrentTab().then((tab) => {
+    checkInternalPageError(tab);
     chrome.scripting
       .executeScript({
         target: { tabId: tab.id },
@@ -111,4 +122,10 @@ function refreshContent() {
   });
 }
 
-export { getCurrentTab, updateMainContent, displayError, refreshContent };
+export {
+  getCurrentTab,
+  updateMainContent,
+  displayError,
+  refreshContent,
+  checkInternalPageError,
+};

@@ -1,6 +1,6 @@
 {
-  "name": "AI Summary Extensions",
-  "description": "Base Level Extension",
+  "name": "Gemini Summarizer",
+  "description": "A Chrome extension that uses Gemini API to summarize the current webpage.",
   "version": "1.0",
   "manifest_version": 3,
   "action": {

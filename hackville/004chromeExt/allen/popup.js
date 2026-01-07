@@ -1,4 +1,10 @@
-import { updateMainContent, refreshContent, displayError } from "./utils.js";
+import {
+  updateMainContent,
+  refreshContent,
+  displayError,
+  getCurrentTab,
+  checkInternalPageError,
+} from "./utils.js";
 
 chrome.runtime.onMessage.addListener(function (request) {
   if (request.type === "GEMINI_SUMMARY") {
@@ -14,4 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (refreshBtn) {
     refreshBtn.addEventListener("click", refreshContent);
   }
+  getCurrentTab().then((tab) => {
+    checkInternalPageError(tab);
+  });
 });
