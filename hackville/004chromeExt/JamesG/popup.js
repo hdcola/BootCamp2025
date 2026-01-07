@@ -1,7 +1,8 @@
 async function getCurrentTab() {
-	let queryOptions = { active: true, currentWindow: true }
+	let queryOptions = { active: true, lastFocusedWindow: true }
 	// `tab` will either be a `tabs.Tab` instance or `undefined`.
-	let [tab] = await chrome.tabs.query(queryOptions)
+	let tabs = await chrome.tabs.query(queryOptions)
+	let tab = tabs[0]
 	return tab
 }
 
@@ -15,7 +16,7 @@ async function showPopups() {
 async function getTabId() {
 	const tab = await getCurrentTab()
 	console.log('Tab ID:', tab.id)
-	return tab.id
+	return tab?.id
 }
 function getTitle() {
 	return document.title
@@ -32,4 +33,30 @@ function getTitle() {
 	await showPopups()
 	await getTabId()
 	console.log('Popup script executed successfully.')
+})()
+;(async () => {
+	try {
+		const tab = await getCurrentTab()
+		if (!tab?.id) return
+
+		const url = tab.url || ''
+		if (
+			url.startsWith('chrome://') ||
+			url.startsWith('edge://') ||
+			url.startsWith('about:')
+		) {
+			console.warn('Cannot inject into this page:', url)
+			return
+		}
+
+		const results = await chrome.scripting.executeScript({
+			target: { tabId: tab.id },
+			func: () => document.body.innerText,
+		})
+
+		const pageText = results?.[0]?.result ?? ''
+		console.log(pageText)
+	} catch (e) {
+		console.error('executeScript failed:', e)
+	}
 })()
