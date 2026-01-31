@@ -1,0 +1,14 @@
+@GEMINI_API_KEY=AIzaSyCXTaSsK79OGQ3XJLc51zsqNyMnjiYbMuM
+### Ask AI a question 
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent 
+x-goog-api-key: {{GEMINI_API_KEY}} 
+Content-Type: application/json 
+
+{ "contents": [     
+    { "role": "user", "parts": [         
+        { "text": "帮我看看我的⽬录中有多少⽂件?"         
+        }       
+    ]     
+    }   
+] 
+}
