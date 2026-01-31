@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AI Summary extension</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    "
+  >
+    <!-- 容器 -->
+    <div
+      style="
+        max-width: 480px;
+        margin: 0 auto;
+        background: #fff;
+        min-height: 100vh;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+      "
+    >
+      <!-- 头部 -->
+      <div
+        style="
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 20px;
+          text-align: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h1 style="margin: 0; font-size: 24px; font-weight: 600">
+          Gemini Summarizer
+        </h1>
+      </div>
+
+      <!-- Tab 导航 -->
+      <div
+        style="
+          display: flex;
+          background: #f8f9fa;
+          border-bottom: 2px solid #e9ecef;
+        "
+      >
+        <button
+          id="tab-main"
+          class="tab-btn"
+          style="
+            flex: 1;
+            padding: 16px;
+            border: none;
+            background: white;
+            color: #667eea;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          "
+        >
+          <span style="position: relative; z-index: 1">Home</span>
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                135deg,
+                rgba(102, 126, 234, 0.1) 0%,
+                rgba(118, 75, 162, 0.1) 100%
+              );
+              opacity: 0;
+              transition: opacity 0.3s;
+            "
+          ></div>
+        </button>
+        <button
+          id="tab-settings"
+          class="tab-btn"
+          style="
+            flex: 1;
+            padding: 16px;
+            border: none;
+            background: transparent;
+            color: #6c757d;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+          "
+        >
+          <span style="position: relative; z-index: 1">Settings</span>
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                135deg,
+                rgba(102, 126, 234, 0.1) 0%,
+                rgba(118, 75, 162, 0.1) 100%
+              );
+              opacity: 0;
+              transition: opacity 0.3s;
+            "
+          ></div>
+        </button>
+      </div>
+
+      <!-- 主内容标签页 -->
+      <div
+        id="main-tab"
+        style="padding: 20px; display: block; animation: fadeIn 0.3s ease"
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+          "
+        >
+          <button
+            id="refresh-btn"
+            style="
+              padding: 12px 24px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+              transition: all 0.3s ease;
+              position: relative;
+              overflow: hidden;
+            "
+          >
+            <span style="position: relative; z-index: 1">Refresh</span>
+          </button>
+        </div>
+        <div
+          id="main-content"
+          style="
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 400px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+          "
+        ></div>
+      </div>
+
+      <!-- 设置标签页 -->
+      <div
+        id="settings-tab"
+        style="padding: 20px; display: none; animation: fadeIn 0.3s ease"
+      >
+        <h2
+          style="
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 24px;
+            font-weight: 600;
+          "
+        >
+          Configuration Settings
+        </h2>
+
+        <form
+          id="settings-form"
+          style="display: flex; flex-direction: column; gap: 20px"
+        >
+          <!-- URL 输入 -->
+          <div class="form-group">
+            <label
+              style="
+                display: block;
+                color: #495057;
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 14px;
+                transition: color 0.3s;
+              "
+            >
+              API URL
+            </label>
+            <input
+              type="url"
+              id="api-url"
+              placeholder="https://example.com"
+              style="
+                width: 100%;
+                padding: 14px 16px;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                background: white;
+                outline: none;
+              "
+            />
+          </div>
+
+          <!-- 提示词输入 -->
+          <div class="form-group">
+            <label
+              style="
+                display: block;
+                color: #495057;
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 14px;
+                transition: color 0.3s;
+              "
+            >
+              Prompt
+            </label>
+            <textarea
+              id="prompt"
+              rows="4"
+              placeholder="The output should be in Chinese. Structure the paragraph using markdown syntax..."
+              style="
+                width: 100%;
+                padding: 14px 16px;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                resize: vertical;
+                background: white;
+                outline: none;
+                font-family: inherit;
+              "
+            ></textarea>
+          </div>
+
+          <!-- API Key 输入 -->
+          <div class="form-group">
+            <label
+              style="
+                display: block;
+                color: #495057;
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 14px;
+                transition: color 0.3s;
+              "
+            >
+              API Key
+            </label>
+            <input
+              type="password"
+              id="api-key"
+              placeholder="your-api-key"
+              style="
+                width: 100%;
+                padding: 14px 16px;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                background: white;
+                outline: none;
+              "
+            />
+          </div>
+
+          <!-- Model 输入 -->
+          <div class="form-group">
+            <label
+              style="
+                display: block;
+                color: #495057;
+                font-weight: 600;
+                margin-bottom: 8px;
+                font-size: 14px;
+                transition: color 0.3s;
+              "
+            >
+              Model
+            </label>
+            <input
+              type="text"
+              id="model"
+              placeholder="gemini-3-flash-preview"
+              style="
+                width: 100%;
+                padding: 14px 16px;
+                border: 2px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                background: white;
+                outline: none;
+              "
+            />
+          </div>
+
+          <!-- 保存按钮 -->
+          <button
+            type="submit"
+            style="
+              padding: 16px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-size: 16px;
+              font-weight: 600;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+              transition: all 0.3s ease;
+              margin-top: 10px;
+              position: relative;
+              overflow: hidden;
+            "
+          >
+            <span style="position: relative; z-index: 1">Save Settings</span>
+            <div
+              class="btn-ripple"
+              style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+              "
+            ></div>
+          </button>
+
+          <!-- 加载指示器 -->
+          <div
+            id="loading-indicator"
+            style="display: none; text-align: center; padding: 20px"
+          >
+            <div
+              style="
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                border: 4px solid #f3f3f3;
+                border-top: 4px solid #667eea;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+              "
+            ></div>
+            <p style="margin-top: 12px; color: #667eea; font-weight: 600">
+              Saving...
+            </p>
+          </div>
+
+          <!-- 成功消息 -->
+          <div
+            id="success-message"
+            style="
+              display: none;
+              padding: 16px;
+              background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+              color: white;
+              border-radius: 8px;
+              text-align: center;
+              font-weight: 600;
+              animation: slideIn 0.3s ease;
+            "
+          >
+            Settings saved successfully!
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .rotating {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Tab 按钮悬停效果 */
+      .tab-btn:hover > div {
+        opacity: 1 !important;
+      }
+
+      .tab-btn:active {
+        transform: scale(0.98);
+      }
+
+      /* 输入框聚焦效果 */
+      input:focus,
+      textarea:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+      }
+
+      .form-group:focus-within label {
+        color: #667eea !important;
+      }
+
+      /* 按钮悬停效果 */
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* 输入框动画 */
+      input,
+      textarea {
+        position: relative;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #adb5bd;
+        transition: color 0.3s;
+      }
+
+      input:focus::placeholder,
+      textarea:focus::placeholder {
+        color: #ced4da;
+      }
+    </style>
+
+    <script type="module" src="sidepanel.js"></script>
+    <script src="./lib/marked.min.js"></script>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
